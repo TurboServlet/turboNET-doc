@@ -29,7 +29,7 @@ POST /web/userOption/upsertUserPortrait
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 |body|body|[UpsertUserPortraitRequestVO](#schemaupsertuserportraitrequestvo)| 否 |none|
 
 > 返回示例
@@ -66,7 +66,7 @@ POST /web/userOption/upsertUserName
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 |body|body|[TurboCustomNameRequestVO](#schematurbocustomnamerequestvo)| 否 |none|
 
 > 返回示例
@@ -103,7 +103,7 @@ POST /web/userOption/upsertTicketWhitelist
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 |body|body|[TurboTicketWhitelistRequestVO](#schematurboticketwhitelistrequestvo)| 否 |none|
 
 > 返回示例
@@ -132,7 +132,7 @@ POST /web/userOption/deleteUserPortrait
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -160,7 +160,7 @@ POST /web/userOption/deleteUserName
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -190,7 +190,7 @@ POST /web/userOption/deleteTicketWhitelist
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -226,7 +226,7 @@ POST /web/photo/removeFavoritePhoto
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 |body|body|[PhotoFavoriteRequestVO](#schemaphotofavoriterequestvo)| 否 |none|
 
 > 返回示例
@@ -263,7 +263,7 @@ POST /web/photo/addFavoritePhoto
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 |body|body|[PhotoFavoriteRequestVO](#schemaphotofavoriterequestvo)| 否 |none|
 
 > 返回示例
@@ -284,7 +284,7 @@ POST /web/photo/addFavoritePhoto
 
 <a id="opIdwebUserApi"></a>
 
-## GET 用户
+## GET 用户（此API不允许BotKey调用）
 
 GET /web/user
 
@@ -292,7 +292,7 @@ GET /web/user
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
 
 > 返回示例
 
@@ -331,7 +331,7 @@ GET /web/turbo
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -382,7 +382,7 @@ GET /web/ticket
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -429,7 +429,7 @@ GET /web/record
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -505,7 +505,7 @@ GET /web/ranking/userIgnored/enable
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -536,7 +536,7 @@ GET /web/ranking/userIgnored/disable
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|userId|query|Long| 是 |userId|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -568,7 +568,7 @@ GET /web/ranking/totalAchievement/users
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |index|query|Int| 是 |索引|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -616,7 +616,7 @@ GET /web/ranking/totalAchievement/everyone
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |index|query|Int| 是 |索引|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -664,7 +664,7 @@ GET /web/ranking/deluxRanking/users
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |index|query|Int| 是 |索引|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -712,7 +712,7 @@ GET /web/ranking/deluxRanking/everyone
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |index|query|Int| 是 |索引|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -759,7 +759,7 @@ GET /web/playerData
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -817,7 +817,7 @@ GET /web/photo/getHistoryPhotoList
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |index|query|Int| 是 |索引|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -885,7 +885,7 @@ GET /web/photo/getFavoritePhotoList
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
 |index|query|Int| 是 |索引|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -952,7 +952,7 @@ GET /web/permission
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1010,7 +1010,7 @@ GET /web/network
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1055,7 +1055,7 @@ GET /web/home
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1101,7 +1101,7 @@ GET /web/command/qrUdemaeShowAchievement
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1137,7 +1137,7 @@ GET /web/command/qrPing
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1173,7 +1173,7 @@ GET /web/command/qrMaskUsername
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1207,7 +1207,7 @@ GET /web/command/qrLogin
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1241,7 +1241,7 @@ GET /web/command/qrKastanjLogin
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1269,7 +1269,7 @@ GET /web/command/qrKastanjLogin
 
 <a id="opIdunbanUserApi"></a>
 
-## POST 解除用户封禁
+## POST 解除用户封禁（此API不允许BotKey调用）
 
 POST /permission/unbanUser
 
@@ -1285,7 +1285,7 @@ POST /permission/unbanUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
 |body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
 
 > 返回示例
@@ -1324,7 +1324,7 @@ POST /permission/deauthorizeUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 |body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
 
 > 返回示例
@@ -1347,7 +1347,7 @@ POST /permission/deauthorizeUser
 
 <a id="opIddeBuilderUserApi"></a>
 
-## POST 取消技术实施员
+## POST 取消技术实施员（此API不允许BotKey调用）
 
 POST /permission/deBuilderUser
 
@@ -1363,7 +1363,7 @@ POST /permission/deBuilderUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
 |body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
 
 > 返回示例
@@ -1386,7 +1386,7 @@ POST /permission/deBuilderUser
 
 <a id="opIdbuilderUserApi"></a>
 
-## POST 给予技术实施员
+## POST 给予技术实施员（此API不允许BotKey调用）
 
 POST /permission/builderUser
 
@@ -1402,7 +1402,7 @@ POST /permission/builderUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
 |body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
 
 > 返回示例
@@ -1425,7 +1425,7 @@ POST /permission/builderUser
 
 <a id="opIdbanUserApi"></a>
 
-## POST 给予用户封禁
+## POST 给予用户封禁（此API不允许BotKey调用）
 
 POST /permission/banUser
 
@@ -1441,7 +1441,7 @@ POST /permission/banUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
 |body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
 
 > 返回示例
@@ -1480,7 +1480,7 @@ POST /permission/authorizeUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 |body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
 
 > 返回示例
@@ -1511,7 +1511,7 @@ GET /permission/showUserPermission
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
@@ -1551,7 +1551,6 @@ POST /bot/unbind
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|botKey|query|String| 是 |botKey|
 |body|body|[BotUnbindRequestVO](#schemabotunbindrequestvo)| 否 |none|
 
 > 返回示例
@@ -1559,23 +1558,26 @@ POST /bot/unbind
 > 200 Response
 
 ```json
-{}
+{
+  "isSuccess": true,
+  "data": "string"
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|Inline|
-
-### 返回数据结构
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
 
 <a id="opIdbindApi"></a>
 
 ## POST 绑定
 
 POST /bot/bind
+
+RequestBody需要两个参数，一个botToken一个botName，botName是由你自己定的，只是用来标记是哪个bot，会在用户前端显示。用户想要绑定，需要去net点击右上角头像，找到botToken。
 
 > Body 请求参数
 
@@ -1590,8 +1592,6 @@ POST /bot/bind
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|botName|query|string| 是 |botName|
-|botToken|query|long| 是 |botToken|
 |body|body|[BotBindRequestVO](#schemabotbindrequestvo)| 否 |none|
 
 > 返回示例
@@ -1599,17 +1599,20 @@ POST /bot/bind
 > 200 Response
 
 ```json
-{}
+{
+  "isSuccess": true,
+  "data": {
+    "botKey": "string"
+  }
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|Inline|
-
-### 返回数据结构
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOBotBindResponseVO](#schemafinalresponsevobotbindresponsevo)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOBotBindResponseVO](#schemafinalresponsevobotbindresponsevo)|
 
 <a id="opIdbindListApi"></a>
 
@@ -1621,24 +1624,32 @@ GET /bot/bindList
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|String| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
 
 > 返回示例
 
 > 200 Response
 
 ```json
-{}
+{
+  "isSuccess": true,
+  "data": [
+    {
+      "botKey": "string",
+      "botName": "string",
+      "useCount": 0,
+      "bindDate": "string"
+    }
+  ]
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|Inline|
-
-### 返回数据结构
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOListBotBindListResponseVO](#schemafinalresponsevolistbotbindlistresponsevo)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOListBotBindListResponseVO](#schemafinalresponsevolistbotbindlistresponsevo)|
 
 # 权限相关
 
@@ -2075,6 +2086,61 @@ POST /auth/isSecondStepsValid
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
 
 # 数据模型
+
+<h2 id="tocS_FinalResponseVOListBotBindListResponseVO">FinalResponseVOListBotBindListResponseVO</h2>
+
+<a id="schemafinalresponsevolistbotbindlistresponsevo"></a>
+<a id="schema_FinalResponseVOListBotBindListResponseVO"></a>
+<a id="tocSfinalresponsevolistbotbindlistresponsevo"></a>
+<a id="tocsfinalresponsevolistbotbindlistresponsevo"></a>
+
+```json
+{
+  "isSuccess": true,
+  "data": [
+    {
+      "botKey": "string",
+      "botName": "string",
+      "useCount": 0,
+      "bindDate": "string"
+    }
+  ]
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|isSuccess|boolean|true|none||none|
+|data|[[BotBindListResponseVO](#schemabotbindlistresponsevo)]|false|none||none|
+
+<h2 id="tocS_BotBindListResponseVO">BotBindListResponseVO</h2>
+
+<a id="schemabotbindlistresponsevo"></a>
+<a id="schema_BotBindListResponseVO"></a>
+<a id="tocSbotbindlistresponsevo"></a>
+<a id="tocsbotbindlistresponsevo"></a>
+
+```json
+{
+  "botKey": "string",
+  "botName": "string",
+  "useCount": 0,
+  "bindDate": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|botKey|string|true|none||none|
+|botName|string|true|none||none|
+|useCount|integer(int32)|true|none||none|
+|bindDate|string|true|none||none|
 
 <h2 id="tocS_FinalResponseVOPermissionEnum">FinalResponseVOPermissionEnum</h2>
 
@@ -4521,6 +4587,50 @@ POST /auth/isSecondStepsValid
 |token|string|false|none||none|
 |refreshToken|string|false|none||none|
 |botToken|string|false|none||none|
+
+<h2 id="tocS_FinalResponseVOBotBindResponseVO">FinalResponseVOBotBindResponseVO</h2>
+
+<a id="schemafinalresponsevobotbindresponsevo"></a>
+<a id="schema_FinalResponseVOBotBindResponseVO"></a>
+<a id="tocSfinalresponsevobotbindresponsevo"></a>
+<a id="tocsfinalresponsevobotbindresponsevo"></a>
+
+```json
+{
+  "isSuccess": true,
+  "data": {
+    "botKey": "string"
+  }
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|isSuccess|boolean|true|none||none|
+|data|[BotBindResponseVO](#schemabotbindresponsevo)|false|none||none|
+
+<h2 id="tocS_BotBindResponseVO">BotBindResponseVO</h2>
+
+<a id="schemabotbindresponsevo"></a>
+<a id="schema_BotBindResponseVO"></a>
+<a id="tocSbotbindresponsevo"></a>
+<a id="tocsbotbindresponsevo"></a>
+
+```json
+{
+  "botKey": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|botKey|string|true|none||none|
 
 <h2 id="tocS_BotBindRequestVO">BotBindRequestVO</h2>
 
