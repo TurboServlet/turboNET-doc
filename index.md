@@ -1,9 +1,9 @@
 # TurboNET Alpha API 文档
 
 Nya~  
-标记人：桃玖 & CtrlcvsNya & Kiwi  
+marked by：桃玖 & CtrlcvsNya & Kiwi  
 
-基础URL: https://api.mai-turbo.net  
+Base URL: https://api.mai-turbo.net  
 
 Swagger3 版本（替代 GitHub Markdown）: https://api.mai-turbo.net/swagger-ui/index.html
 
