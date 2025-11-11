@@ -1,4 +1,4 @@
-# TurboNET Alpha api 文档
+# TurboNET Alpha api 文档 (原始完整版)
 
 Nya~  
 marked by 桃玖 & CtrlcvsNya & Kiwi  
@@ -6,6 +6,10 @@ marked by 桃玖 & CtrlcvsNya & Kiwi
 Base URLs: https://api.mai-turbo.net  
 
 Swagger3 version (instead of github markdown) : https://api.mai-turbo.net/swagger-ui/index.html
+
+> **注意**: 为了更好的阅读体验，API文档已被重新组织为多个分类页面。
+> 请查看 [index.md](./index.md) 获取新的文档结构和导航链接。
+> 此文件保留为原始完整版，不做改动。
 
 # Authentication
 
