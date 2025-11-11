@@ -3,9 +3,9 @@
 Nya~  
 marked by 桃玖 & CtrlcvsNya & Kiwi  
 
-Base URLs: https://api.mai-turbo.net  
+Base URLs: https://api.sys-allnet.com  
 
-Swagger3 version (instead of github markdown) : https://api.mai-turbo.net/swagger-ui/index.html
+Swagger3 version (instead of github markdown) : https://api.sys-allnet.com/swagger-ui/index.html
 
 # Authentication
 
