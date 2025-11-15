@@ -9,50 +9,13 @@ Swagger3 version (instead of github markdown) : https://api.sys-allnet.com/swagg
 
 # Authentication
 
-# 网页相关
+# 网页-其他
 
-<a id="opIduserOptionUpsertUserPortraitApi"></a>
+<a id="opIduserApi"></a>
 
-## POST 游戏设置-上传用户头像
+## POST 用户
 
-POST /web/userOption/upsertUserPortrait
-
-> Body 请求参数
-
-```json
-{
-  "divData": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-|body|body|[UpsertUserPortraitRequestVO](#schemaupsertuserportraitrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
-
-<a id="opIduserOptionUpsertUserNameApi"></a>
-
-## POST 游戏设置-修改用户名称
-
-POST /web/userOption/upsertUserName
+POST /web/user
 
 > Body 请求参数
 
@@ -66,30 +29,334 @@ POST /web/userOption/upsertUserName
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-|body|body|[TurboCustomNameRequestVO](#schematurbocustomnamerequestvo)| 否 |none|
+|requesterId|query|string| 是 |requesterId|
+|body|body|[UserRequestVO](#schemauserrequestvo)| 否 |none|
 
 > 返回示例
 
 > 200 Response
 
+```
+{"isMe":true,"maimaiName":"string","turboName":"string","qqNumber":"string","avatar":"string","permission":"string","warningTimes":0,"warningMessage":"string","isBanned":true,"bannedMessage":"string","maiStatistics":{"echartsLine":"string","deluxRating":0,"serverRanking":0,"averageAccuracy":0.1,"maxCombo":0,"fullCombo":0,"allPerfect":0,"totalScores":0,"achievementCount":{"sssPlus":0,"sss":0,"ssPlus":0,"ss":0,"s":0,"splus":0}},"playActivity":{"heatmapPoints":"string","playCount":0,"playTime":0.1,"firstPlay":"string","lastPlay":"string","playVersion":"string"},"best35":[{"musicId":0,"level":0.1,"diff":0,"musicName":"string","scoreRank":"string","achievement":0.1,"score":0}],"best15":[{"musicId":0,"level":0.1,"diff":0,"musicName":"string","scoreRank":"string","achievement":0.1,"score":0}],"recentScores":[{"musicId":0,"level":0.1,"diff":0,"musicName":"string","scoreRank":"string","achievement":0.1,"score":0}]}
+```
+
+> 400 Response
+
 ```json
-{}
+{
+  "code": 0,
+  "message": "string"
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[UserResponseVO](#schemauserresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIduserOptionUpsertTicketWhitelistApi"></a>
+<a id="opIdshowServerRequestsApi"></a>
 
-## POST 游戏设置-锁定用户功能券
+## GET 展示服务器请求统计
 
-POST /web/userOption/upsertTicketWhitelist
+GET /web/showServerRequests
+
+> 返回示例
+
+> 200 Response
+
+```
+{"requestsCount":0,"cachedRequestsCount":0,"exceptionRequestsCount":0,"exceptionRequestsCachedCount":0,"exceptionRequestsRate":0.1,"exceptionRequestsCachedRate":0.1,"exceptionRequestsUnCachedRate":0.1,"zlibSkippedRequestsCount":0,"zlibSkippedRequestsBefore":0,"zlibSkippedRequestsRateThanBefore":0.1,"retryRequestsCount":0,"retryRequestsBefore":0,"retryRequestsRateThanBefore":0.1,"panicRequestsCount":0,"panicRequestsBefore":0,"panicRequestsRateThanBefore":0.1}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[ServerRequestsResponseVO](#schemaserverrequestsresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowNetworkStatusApi"></a>
+
+## GET 查看网络状况
+
+GET /web/showNetworkStatus
+
+> 返回示例
+
+> 200 Response
+
+```
+[{"arcadeName":"string","arcadeType":"TURBO","workingStatus":"WORKING","lastHeartbeatSecond":"string","heartbeatMap":["WORKING"]}]
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|*anonymous*|[[NetworkStatusResponseVO](#schemanetworkstatusresponsevo)]|false|none||none|
+|» arcadeName|string|true|none||机厅名称|
+|» arcadeType|string|true|none||机厅类型|
+|» workingStatus|string|true|none||当前状态|
+|» lastHeartbeatSecond|string|true|none||最后心跳包|
+|» heartbeatMap|[string]|true|none||心跳图|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|arcadeType|TURBO|
+|arcadeType|SPECIAL_TYPE_ONE|
+|workingStatus|WORKING|
+|workingStatus|WARNING|
+|workingStatus|ERROR|
+|workingStatus|UNKNOWN|
+
+状态码 **400**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **401**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **403**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **410**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **500**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+<a id="opIdserverRequestsEchartsApi"></a>
+
+## GET 展示服务器请求统计图
+
+GET /web/serverRequestsEcharts
+
+> 返回示例
+
+> 200 Response
+
+```
+{"cachedLatency":[[0]],"unCachedLatency":[[0]],"startTimeStamp":0,"endTimeStamp":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[ServerRequestsEchartsResponseVO](#schemaserverrequestsechartsresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdrecordsApi"></a>
+
+## GET 用户历史游玩记录
+
+GET /web/records
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|page|query|Int| 是 |page|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"content":[{"musicId":0,"musicName":"string","musicAuthor":"string","musicDiff":0,"musicLevel":0.1,"isDxMusic":true,"achievement":0.1,"isNewRecord":true,"addRating":0,"comboInfo":{"type":0,"combo":0,"maxCombo":0},"syncInfo":{"type":0,"sync":0,"maxSync":0},"score":{"critical":0,"perfect":0,"great":0,"good":0,"miss":0}}],"totalElements":0,"totalPages":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[PageDTORecordsResponseVO](#schemapagedtorecordsresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+# 网页-设置相关
+
+<a id="opIdsetUserSettingsApi"></a>
+
+## POST 用户turbo设定
+
+POST /web/setUserSettings
+
+> Body 请求参数
+
+```json
+{
+  "policyName": "string",
+  "policy": "EVERYONE"
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|[SetUserSettingsRequestVO](#schemasetusersettingsrequestvo)| 否 |none|
+
+> 返回示例
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowUserSettingsApi"></a>
+
+## GET 用户turbo设定
+
+GET /web/showUserSettings
+
+> 返回示例
+
+> 200 Response
+
+```
+{"userPageAccessible":"EVERYONE","best35Accessible":"EVERYONE","best15Accessible":"EVERYONE","recentScoresAccessible":"EVERYONE"}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[ShowUserSettingsResponseVO](#schemashowusersettingsresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+# 网页-舞萌相关-跑图券
+
+<a id="opIdsetTicketsApi"></a>
+
+## POST 设定跑图券
+
+POST /web/setTickets
 
 > Body 请求参数
 
@@ -103,122 +370,105 @@ POST /web/userOption/upsertTicketWhitelist
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-|body|body|[TurboTicketWhitelistRequestVO](#schematurboticketwhitelistrequestvo)| 否 |none|
+|body|body|[SetTicketsRequestVO](#schemasetticketsrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
-{}
+{
+  "code": 0,
+  "message": "string"
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIduserOptionDeleteUserPortraitApi"></a>
+<a id="opIdresetTicketsApi"></a>
 
-## POST 游戏设置-删除用户头像
+## POST 取消设定跑图券
 
-POST /web/userOption/deleteUserPortrait
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+POST /web/resetTickets
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
-{}
+{
+  "code": 0,
+  "message": "string"
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIduserOptionDeleteUserNameApi"></a>
+<a id="opIdcurrentTicketsApi"></a>
 
-## POST 游戏设置-删除用户名称
+## GET 当前设定跑图券
 
-POST /web/userOption/deleteUserName
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+GET /web/currentTickets
 
 > 返回示例
 
 > 200 Response
 
+```
+{"turboTicket":{"isEnable":true,"ticketId":0},"maimaiTickets":[{"ticketId":0,"stock":0}]}
+```
+
+> 400 Response
+
 ```json
-{}
+{
+  "code": 0,
+  "message": "string"
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[CurrentTicketsResponseVO](#schemacurrentticketsresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIduserOptionDeleteTicketWhitelistApi"></a>
+# 网页-舞萌相关-maimai个性化设置
 
-## POST 游戏设置-解除用户功能券锁定
+<a id="opIdsetMaimaiNameApi"></a>
 
-POST /web/userOption/deleteTicketWhitelist
+## POST 设定maimai名称
 
-需要权限，Admin，Builder，Authorizer
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
-
-<a id="opIdremoveFavoritePhotoApi"></a>
-
-## POST 相片-移除为用户喜欢相片
-
-POST /web/photo/removeFavoritePhoto
+POST /web/setMaimaiName
 
 > Body 请求参数
 
 ```json
 {
-  "photoUUID": "string"
+  "maimaiName": "string"
 }
 ```
 
@@ -226,36 +476,41 @@ POST /web/photo/removeFavoritePhoto
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-|body|body|[PhotoFavoriteRequestVO](#schemaphotofavoriterequestvo)| 否 |none|
+|body|body|[SetMaimaiNameRequestVO](#schemasetmaimainamerequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
-{}
+{
+  "code": 0,
+  "message": "string"
+}
 ```
 
 ### 返回结果
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdaddFavoritePhotoApi"></a>
+<a id="opIdsetAvatarApi"></a>
 
-## POST 相片-添加为用户喜欢相片
+## POST 设定maimai头像
 
-POST /web/photo/addFavoritePhoto
+POST /web/setAvatar
 
 > Body 请求参数
 
 ```json
 {
-  "photoUUID": "string"
+  "avatarBase64": "string"
 }
 ```
 
@@ -263,53 +518,16 @@ POST /web/photo/addFavoritePhoto
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-|body|body|[PhotoFavoriteRequestVO](#schemaphotofavoriterequestvo)| 否 |none|
+|body|body|[SetAvatarRequestVO](#schemasetavatarrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
-
-```json
-{}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[Unit](#schemaunit)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[Unit](#schemaunit)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[Unit](#schemaunit)|
-
-<a id="opIdwebUserApi"></a>
-
-## GET 用户（此API不允许BotKey调用）
-
-GET /web/user
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
-
-> 返回示例
-
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": {
-    "username": "string",
-    "permissionLevel": "string",
-    "email": "string",
-    "qqNumber": "string",
-    "mai2Name": "string",
-    "mai2SHA256": "string",
-    "botToken": "string"
-  }
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -317,50 +535,89 @@ GET /web/user
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOUserResponseVO](#schemafinalresponsevouserresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOUserResponseVO](#schemafinalresponsevouserresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header是否正确|[FinalResponseVOUserResponseVO](#schemafinalresponsevouserresponsevo)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdturboApi"></a>
+<a id="opIdresetMaimaiNameApi"></a>
 
-## GET 加速盒子-游玩信息
+## POST 重置maimai名称
 
-GET /web/turbo
+POST /web/resetMaimaiName
 
-### 请求参数
+> 返回示例
 
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdresetAvatarApi"></a>
+
+## POST 重置maimai头像
+
+POST /web/resetAvatar
+
+> 返回示例
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowMaimaiNameApi"></a>
+
+## GET 展示maimai名称
+
+GET /web/showMaimaiName
 
 > 返回示例
 
 > 200 Response
 
+```
+"string"
+```
+
+> 400 Response
+
 ```json
 {
-  "isSuccess": true,
-  "data": {
-    "show": true,
-    "turboInfoList": [
-      {
-        "name": "string",
-        "allRequestsNumber": 0,
-        "cacheRequestsNumber": 0,
-        "fixedRequestNumber": 0,
-        "cacheHitRate": "string",
-        "detail": {
-          "isEmptyDetail": true,
-          "tenMinutesDetail": {},
-          "thirtyMinutesDetail": {},
-          "hourDetail": {},
-          "playerDetail": [
-            null
-          ]
-        }
-      }
-    ]
-  }
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -368,916 +625,26 @@ GET /web/turbo
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOTurboResponseVO](#schemafinalresponsevoturboresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOTurboResponseVO](#schemafinalresponsevoturboresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOTurboResponseVO](#schemafinalresponsevoturboresponsevo)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|string|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdticketApi"></a>
+# 网页-NET好友
 
-## GET 游戏数据-用户功能票
+<a id="opIdsetFriendSearchPolicyApi"></a>
 
-GET /web/ticket
+## POST 设置好友查找权限
 
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "ticketList": [
-      {
-        "ticketId": 0,
-        "ticketName": "string",
-        "ticketImg": "string",
-        "ticketCount": 0
-      }
-    ],
-    "turboTicketInfo": {
-      "ticketId": 0,
-      "ticketName": "string",
-      "ticketImg": "string"
-    },
-    "isEnableTurboTicket": true,
-    "isTicketEmpty": true
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOTicketResponseVO](#schemafinalresponsevoticketresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOTicketResponseVO](#schemafinalresponsevoticketresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOTicketResponseVO](#schemafinalresponsevoticketresponsevo)|
-
-<a id="opIdrecordApi"></a>
-
-## GET 记录-游玩记录
-
-GET /web/record
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "show": true,
-    "recordList": [
-      {
-        "userInfo": {
-          "trackNumber": 0,
-          "musicPlayDate": "string",
-          "isClear": true,
-          "isAchievementNewRecord": true,
-          "isDxScoreNewRecord": true,
-          "comboStatusImg": "string",
-          "syncStatusImg": "string",
-          "userDxScore": 0,
-          "userBeforeRating": 0,
-          "userAfterRating": 0,
-          "userAchievementStr": "string",
-          "userAchievementRankImg": "string",
-          "userCombo": 0,
-          "maxCombo": 0,
-          "userSync": 0,
-          "maxSync": 0,
-          "dxStarImg": "string"
-        },
-        "musicInfo": {
-          "musicName": "string",
-          "musicLevel": 0,
-          "musicDiff": "string",
-          "musicDiffImg": "string",
-          "musicIcon": "string",
-          "isDxMusic": true,
-          "maxDxScore": 0
-        },
-        "detailInfo": {
-          "isEnabledCriticalPerfect": true,
-          "isEnabledFastAndLate": true,
-          "fast": 0,
-          "late": 0,
-          "tap": {},
-          "hold": {},
-          "slide": {},
-          "touch": {},
-          "mai2Break": {}
-        }
-      }
-    ]
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVORecordResponseVO](#schemafinalresponsevorecordresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVORecordResponseVO](#schemafinalresponsevorecordresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVORecordResponseVO](#schemafinalresponsevorecordresponsevo)|
-
-<a id="opIduserIgnoredEnableApi"></a>
-
-## GET 排行榜-在排行榜中隐藏自己
-
-GET /web/ranking/userIgnored/enable
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": "string"
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
-
-<a id="opIduserIgnoredDisableApi"></a>
-
-## GET 排行榜-在排行榜中取消隐藏自己
-
-GET /web/ranking/userIgnored/disable
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": "string"
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
-
-<a id="opIdtotalAchievementUsersApi"></a>
-
-## GET 排行榜-觉醒排行榜-TurboNET注册用户排行
-
-GET /web/ranking/totalAchievement/users
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|index|query|Int| 是 |索引|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "singlePlayerRanking": [
-      {
-        "playerRanking": 0,
-        "playerName": "string",
-        "playerTotalAchievement": 0
-      }
-    ],
-    "userRanking": {
-      "playerRanking": 0,
-      "playerTotalAchievement": 0,
-      "playerPercent": 0,
-      "isIgnored": true
-    },
-    "totalPages": 0,
-    "totalElements": 0
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVORankingAchievementResponseVO](#schemafinalresponsevorankingachievementresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVORankingAchievementResponseVO](#schemafinalresponsevorankingachievementresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVORankingAchievementResponseVO](#schemafinalresponsevorankingachievementresponsevo)|
-
-<a id="opIdtotalAchievementApi"></a>
-
-## GET 排行榜-觉醒排行榜-全国加速盒子玩家排行
-
-GET /web/ranking/totalAchievement/everyone
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|index|query|Int| 是 |索引|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "singlePlayerRanking": [
-      {
-        "playerRanking": 0,
-        "playerName": "string",
-        "playerTotalAchievement": 0
-      }
-    ],
-    "userRanking": {
-      "playerRanking": 0,
-      "playerTotalAchievement": 0,
-      "playerPercent": 0,
-      "isIgnored": true
-    },
-    "totalPages": 0,
-    "totalElements": 0
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVORankingAchievementResponseVO](#schemafinalresponsevorankingachievementresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVORankingAchievementResponseVO](#schemafinalresponsevorankingachievementresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVORankingAchievementResponseVO](#schemafinalresponsevorankingachievementresponsevo)|
-
-<a id="opIddeluxRankingUsersApi"></a>
-
-## GET 排行榜-DX RATING排行榜-TurboNET注册用户排行
-
-GET /web/ranking/deluxRanking/users
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|index|query|Int| 是 |索引|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "singlePlayerRanking": [
-      {
-        "playerRanking": 0,
-        "playerName": "string",
-        "playerRating": 0
-      }
-    ],
-    "userRanking": {
-      "playerRanking": 0,
-      "playerRating": 0,
-      "playerPercent": 0,
-      "isIgnored": true
-    },
-    "totalPages": 0,
-    "totalElements": 0
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVORankingResponseVO](#schemafinalresponsevorankingresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVORankingResponseVO](#schemafinalresponsevorankingresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVORankingResponseVO](#schemafinalresponsevorankingresponsevo)|
-
-<a id="opIddeluxRankingEveryoneApi"></a>
-
-## GET 排行榜-DX RATING排行榜-全国加速盒子玩家排行
-
-GET /web/ranking/deluxRanking/everyone
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|index|query|Int| 是 |索引|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "singlePlayerRanking": [
-      {
-        "playerRanking": 0,
-        "playerName": "string",
-        "playerRating": 0
-      }
-    ],
-    "userRanking": {
-      "playerRanking": 0,
-      "playerRating": 0,
-      "playerPercent": 0,
-      "isIgnored": true
-    },
-    "totalPages": 0,
-    "totalElements": 0
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVORankingResponseVO](#schemafinalresponsevorankingresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVORankingResponseVO](#schemafinalresponsevorankingresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVORankingResponseVO](#schemafinalresponsevorankingresponsevo)|
-
-<a id="opIdplayerDataApi"></a>
-
-## GET 游戏数据-游戏数据
-
-GET /web/playerData
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "achievement": {
-      "sssp": 0,
-      "sss": 0,
-      "ssp": 0,
-      "ss": 0,
-      "sp": 0,
-      "s": 0
-    },
-    "combo": {
-      "app": 0,
-      "ap": 0,
-      "fcp": 0,
-      "fc": 0
-    },
-    "sync": {
-      "fsdp": 0,
-      "fsd": 0,
-      "fsp": 0,
-      "fs": 0
-    },
-    "userInfo": {
-      "name": "string",
-      "playCount": 0
-    },
-    "allMusic": 0
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOPlayerDataResponseVO](#schemafinalresponsevoplayerdataresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOPlayerDataResponseVO](#schemafinalresponsevoplayerdataresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOPlayerDataResponseVO](#schemafinalresponsevoplayerdataresponsevo)|
-
-<a id="opIdgetHistoryPhotoListApi"></a>
-
-## GET 相片-用户历史相片
-
-GET /web/photo/getHistoryPhotoList
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|index|query|Int| 是 |索引|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "photoList": {
-      "totalPages": 0,
-      "totalElements": 0,
-      "size": 0,
-      "content": [
-        {
-          "photoUUID": "string",
-          "photoImg": "string",
-          "date": "string",
-          "isFavorite": true
-        }
-      ],
-      "number": 0,
-      "sort": {
-        "empty": true,
-        "sorted": true,
-        "unsorted": true
-      },
-      "pageable": {
-        "offset": 0,
-        "sort": {
-          "empty": null,
-          "sorted": null,
-          "unsorted": null
-        },
-        "paged": true,
-        "pageNumber": 0,
-        "pageSize": 0,
-        "unpaged": true
-      },
-      "numberOfElements": 0,
-      "first": true,
-      "last": true,
-      "empty": true
-    }
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOPhotoResponseVO](#schemafinalresponsevophotoresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOPhotoResponseVO](#schemafinalresponsevophotoresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOPhotoResponseVO](#schemafinalresponsevophotoresponsevo)|
-
-<a id="opIdgetFavoritePhotoListApi"></a>
-
-## GET 相片-用户喜爱相片
-
-GET /web/photo/getFavoritePhotoList
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|index|query|Int| 是 |索引|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "photoList": {
-      "totalPages": 0,
-      "totalElements": 0,
-      "size": 0,
-      "content": [
-        {
-          "photoUUID": "string",
-          "photoImg": "string",
-          "date": "string",
-          "isFavorite": true
-        }
-      ],
-      "number": 0,
-      "sort": {
-        "empty": true,
-        "sorted": true,
-        "unsorted": true
-      },
-      "pageable": {
-        "offset": 0,
-        "sort": {
-          "empty": null,
-          "sorted": null,
-          "unsorted": null
-        },
-        "paged": true,
-        "pageNumber": 0,
-        "pageSize": 0,
-        "unpaged": true
-      },
-      "numberOfElements": 0,
-      "first": true,
-      "last": true,
-      "empty": true
-    }
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOPhotoResponseVO](#schemafinalresponsevophotoresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOPhotoResponseVO](#schemafinalresponsevophotoresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOPhotoResponseVO](#schemafinalresponsevophotoresponsevo)|
-
-<a id="opIdpermissionApi"></a>
-
-## GET 权限展示
-
-GET /web/permission
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "permissionLevel": "ADMIN",
-    "username": "string",
-    "qqNumber": "string",
-    "permissionList": [
-      {
-        "permissionDescription": "string",
-        "isGranted": true
-      }
-    ],
-    "authorizationsList": [
-      {
-        "userBefore": "ADMIN",
-        "userAfter": "ADMIN",
-        "authorizationUsername": "string",
-        "changedDate": "string"
-      }
-    ],
-    "bannedList": [
-      {
-        "bannedUsername": "string",
-        "changedByUsername": "string",
-        "changedDate": "string"
-      }
-    ]
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOPermissionResponseVO](#schemafinalresponsevopermissionresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOPermissionResponseVO](#schemafinalresponsevopermissionresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOPermissionResponseVO](#schemafinalresponsevopermissionresponsevo)|
-
-<a id="opIdnetworkApi"></a>
-
-## GET 网络状态查询
-
-GET /web/network
-
-包含zlibSkippedCount, retryExceptionCount, panicCount, allPacketNums}
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "packets": {
-      "zlibSkippedCount": 0,
-      "retryExceptionCount": 0,
-      "panicCount": 0,
-      "allPacketNums": 0
-    },
-    "packetsBefore": {
-      "zlibSkippedCount": 0,
-      "retryExceptionCount": 0,
-      "panicCount": 0
-    }
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVONetworkResponseVO](#schemafinalresponsevonetworkresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVONetworkResponseVO](#schemafinalresponsevonetworkresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVONetworkResponseVO](#schemafinalresponsevonetworkresponsevo)|
-
-<a id="opIdwebHomeApi"></a>
-
-## GET 用户主页
-
-GET /web/home
-
-包含playerName, playerRating, totalAwake, courseRank, classRank, iconId
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "playerName": "string",
-    "playerRating": 0,
-    "totalAwake": 0,
-    "courseRank": 0,
-    "classRank": 0,
-    "iconId": 0,
-    "loginAccount": "string",
-    "loginEmail": "string",
-    "lastPlayDate": "string",
-    "banState": 0,
-    "isPortrait": true,
-    "portrait": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOHomeResponseVO](#schemafinalresponsevohomeresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOHomeResponseVO](#schemafinalresponsevohomeresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOHomeResponseVO](#schemafinalresponsevohomeresponsevo)|
-
-<a id="opIdcommandQrUdemaeShowAchievementApi"></a>
-
-## GET Turbo盒子工具-机台设置-友人对战完成度显示
-
-GET /web/command/qrUdemaeShowAchievement
-
-需要权限，Admin，Builder
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "qrCodeBase64": "string",
-    "qrCodeValidTime": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-
-<a id="opIdcommandQrPingApi"></a>
-
-## GET Turbo盒子工具-机台设置-PING 机台
-
-GET /web/command/qrPing
-
-需要权限，Admin，Builder
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "qrCodeBase64": "string",
-    "qrCodeValidTime": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-
-<a id="opIdcommandQrMaskUsernameApi"></a>
-
-## GET Turbo盒子工具-机台设置-遮挡用户名
-
-GET /web/command/qrMaskUsername
-
-需要权限，Admin，Builder
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "qrCodeBase64": "string",
-    "qrCodeValidTime": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-
-<a id="opIdcommandQrLoginApi"></a>
-
-## GET Turbo盒子工具-个人设置-Maiturbo NET 加速盒子机台登入
-
-GET /web/command/qrLogin
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "qrCodeBase64": "string",
-    "qrCodeValidTime": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-
-<a id="opIdcommandQrKastanjLoginApi"></a>
-
-## GET Turbo盒子工具-个人设置-Maiturbo NET 加速盒子Kastanj机台登入
-
-GET /web/command/qrKastanjLogin
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "qrCodeBase64": "string",
-    "qrCodeValidTime": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请检查权限|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOQrResponseVO](#schemafinalresponsevoqrresponsevo)|
-
-# 授权相关
-
-<a id="opIdunbanUserApi"></a>
-
-## POST 解除用户封禁（此API不允许BotKey调用）
-
-POST /permission/unbanUser
+POST /web/setFriendSearchPolicy
 
 > Body 请求参数
 
 ```json
 {
-  "changeUsername": "string"
+  "policy": "AUTO_ACCEPT"
 }
 ```
 
@@ -1285,17 +652,16 @@ POST /permission/unbanUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
-|body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
+|body|body|[FriendSearchPolicyRequestVO](#schemafriendsearchpolicyrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "string"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1303,20 +669,24 @@ POST /permission/unbanUser
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIddeauthorizeUserApi"></a>
+<a id="opIdremoveRivalApi"></a>
 
-## POST 取消授权用户
+## POST 删除对手
 
-POST /permission/deauthorizeUser
+POST /web/removeRival
 
 > Body 请求参数
 
 ```json
 {
-  "changeUsername": "string"
+  "turboName": "string"
 }
 ```
 
@@ -1324,17 +694,16 @@ POST /permission/deauthorizeUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-|body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
+|body|body|[FriendRequestVO](#schemafriendrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "string"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1342,20 +711,24 @@ POST /permission/deauthorizeUser
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIddeBuilderUserApi"></a>
+<a id="opIdremoveFriendApi"></a>
 
-## POST 取消技术实施员（此API不允许BotKey调用）
+## POST 移除好友
 
-POST /permission/deBuilderUser
+POST /web/removeFriend
 
 > Body 请求参数
 
 ```json
 {
-  "changeUsername": "string"
+  "turboName": "string"
 }
 ```
 
@@ -1363,17 +736,16 @@ POST /permission/deBuilderUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
-|body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
+|body|body|[FriendRequestVO](#schemafriendrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "string"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1381,20 +753,24 @@ POST /permission/deBuilderUser
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdbuilderUserApi"></a>
+<a id="opIddenyFriendApi"></a>
 
-## POST 给予技术实施员（此API不允许BotKey调用）
+## POST 拒绝好友
 
-POST /permission/builderUser
+POST /web/denyFriend
 
 > Body 请求参数
 
 ```json
 {
-  "changeUsername": "string"
+  "turboName": "string"
 }
 ```
 
@@ -1402,17 +778,16 @@ POST /permission/builderUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
-|body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
+|body|body|[FriendRequestVO](#schemafriendrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "string"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1420,20 +795,24 @@ POST /permission/builderUser
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdbanUserApi"></a>
+<a id="opIdaddRivalApi"></a>
 
-## POST 给予用户封禁（此API不允许BotKey调用）
+## POST 添加对手
 
-POST /permission/banUser
+POST /web/addRival
 
 > Body 请求参数
 
 ```json
 {
-  "changeUsername": "string"
+  "turboName": "string"
 }
 ```
 
@@ -1441,17 +820,16 @@ POST /permission/banUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。此界面仅允许正常网页，不允许BotKey调用！|
-|body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
+|body|body|[FriendRequestVO](#schemafriendrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "string"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1459,20 +837,24 @@ POST /permission/banUser
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdauthorizeUserApi"></a>
+<a id="opIdaddFriendApi"></a>
 
-## POST 给予授权用户
+## POST 添加好友
 
-POST /permission/authorizeUser
+POST /web/addFriend
 
 > Body 请求参数
 
 ```json
 {
-  "changeUsername": "string"
+  "turboName": "string"
 }
 ```
 
@@ -1480,17 +862,16 @@ POST /permission/authorizeUser
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
-|body|body|[PermissionRequestVO](#schemapermissionrequestvo)| 否 |none|
+|body|body|[FriendRequestVO](#schemafriendrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "string"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1498,29 +879,41 @@ POST /permission/authorizeUser
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdshowUserPermissionApi"></a>
+<a id="opIdacceptFriendApi"></a>
 
-## GET 展示用户权限
+## POST 同意好友请求
 
-GET /permission/showUserPermission
+POST /web/acceptFriend
+
+> Body 请求参数
+
+```json
+{
+  "turboName": "string"
+}
+```
 
 ### 请求参数
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|body|body|[FriendRequestVO](#schemafriendrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "ADMIN"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1528,10 +921,661 @@ GET /permission/showUserPermission
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOPermissionEnum](#schemafinalresponsevopermissionenum)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOPermissionEnum](#schemafinalresponsevopermissionenum)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-# Bot相关
+<a id="opIdshowRivalApi"></a>
+
+## GET 展示对手
+
+GET /web/showRival
+
+> 返回示例
+
+> 200 Response
+
+```
+{"turboNameList":["string"],"length":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[ShowRivalResponseVO](#schemashowrivalresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowFriendsApi"></a>
+
+## GET 好友列表
+
+GET /web/showFriends
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|page|query|Int| 是 |page|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"content":[{"turboName":"string","avatar":"string","lastPlayHour":"string","lastPlayPlace":"string","permission":"ADMIN","warningTimes":0,"isBanned":true}],"totalElements":0,"totalPages":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[PageDTOShowFriendsResponseVO](#schemapagedtoshowfriendsresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowFriendSearchPolicyApi"></a>
+
+## GET 展示好友查找权限
+
+GET /web/showFriendSearchPolicy
+
+> 返回示例
+
+> 200 Response
+
+```
+"AUTO_ACCEPT"
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|string|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowFriendRequestsApi"></a>
+
+## GET 好友请求列表
+
+GET /web/showFriendRequests
+
+> 返回示例
+
+> 200 Response
+
+```
+[{"turboName":"string","avatar":"string","permission":"ADMIN","warningTimes":0,"isBanned":true,"requestTime":"string"}]
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|*anonymous*|[[ShowFriendRequestsResponseVO](#schemashowfriendrequestsresponsevo)]|false|none||none|
+|» turboName|string|true|none||turbo名称|
+|» avatar|string|true|none||头像|
+|» permission|string|true|none||权限|
+|» warningTimes|integer(int32)|true|none||警告时间|
+|» isBanned|boolean|true|none||是否封禁|
+|» requestTime|string|true|none||请求时间|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|permission|ADMIN|
+|permission|BUILDER|
+|permission|AUTHORIZER|
+|permission|USER|
+
+状态码 **400**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **401**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **403**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **410**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **500**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+# 网页-舞萌相关-相片
+
+<a id="opIdremoveFavoriteApi"></a>
+
+## POST 纪念图片取消喜欢
+
+POST /web/removeFavorite
+
+> Body 请求参数
+
+```json
+{
+  "photoId": "string"
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|[FavoriteRequestVO](#schemafavoriterequestvo)| 否 |none|
+
+> 返回示例
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdaddFavoriteApi"></a>
+
+## POST 纪念图片添加喜欢
+
+POST /web/addFavorite
+
+> Body 请求参数
+
+```json
+{
+  "photoId": "string"
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|[FavoriteRequestVO](#schemafavoriterequestvo)| 否 |none|
+
+> 返回示例
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdhistoryPhotosApi"></a>
+
+## GET 用户turbo历史图片
+
+GET /web/historyPhotos
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|page|query|Int| 是 |page|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"content":[{"photoId":"string","isFavorite":true}],"totalElements":0,"totalPages":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[PageDTOHistoryPhotosResponseVO](#schemapagedtohistoryphotosresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdfavoritePhotosApi"></a>
+
+## GET 用户turbo历史喜爱图片
+
+GET /web/favoritePhotos
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|page|query|Int| 是 |page|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"content":["string"],"totalElements":0,"totalPages":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[PageDTOString](#schemapagedtostring)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+# 网页-机厅信息
+
+<a id="opIdremoveArcadeAliasApi"></a>
+
+## POST 删除机厅别名
+ 注意本api仅管理员可用
+
+POST /web/removeArcadeAlias
+
+> Body 请求参数
+
+```json
+{
+  "arcadeName": "string",
+  "arcadeAlias": "string"
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|[ArcadeAliasRequestVO](#schemaarcadealiasrequestvo)| 否 |none|
+
+> 返回示例
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdsetArcadeSettingsApi"></a>
+
+## POST 新增机厅别名
+ 注意本api仅管理员和技术管理员可用
+
+POST /web/addArcadeAlias
+
+> Body 请求参数
+
+```json
+{
+  "arcadeName": "string",
+  "arcadeAlias": "string"
+}
+```
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|body|body|[ArcadeAliasRequestVO](#schemaarcadealiasrequestvo)| 否 |none|
+
+> 返回示例
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowArcadeSettingsApi"></a>
+
+## GET 展示机厅别名
+
+GET /web/showArcadeAlias
+
+> 返回示例
+
+> 200 Response
+
+```
+{"permission":"ADMIN","arcadeList":[{"arcadeName":"string","arcadeType":"TURBO","arcadeAlias":["string"]}]}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[ShowArcadeAliasResponseVO](#schemashowarcadealiasresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdarcadeInfoApi"></a>
+
+## GET 去过的机厅信息
+
+GET /web/arcadeInfo
+
+> 返回示例
+
+> 200 Response
+
+```
+[{"arcadeName":"string","arcadeType":"TURBO","arcadePlayCount":0,"arcadeRequested":0,"arcadeCachedRequest":0,"arcadeFixedRequest":0,"arcadeCachedHitRate":0.1,"singleArcadeInfo":[{"singleName":"string","isEnableCustomName":true,"isEnableCustomAvatar":true,"isEnableTurboTicket":true,"arcadeEnableSetting":["string"]}]}]
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|*anonymous*|[[ArcadeInfoResponseVO](#schemaarcadeinforesponsevo)]|false|none||none|
+|» arcadeName|string|true|none||机厅名称|
+|» arcadeType|string|true|none||机厅类型|
+|» arcadePlayCount|integer(int32)|true|none||机厅pc数|
+|» arcadeRequested|integer(int32)|true|none||机厅请求|
+|» arcadeCachedRequest|integer(int32)|true|none||机厅缓存|
+|» arcadeFixedRequest|integer(int32)|true|none||机厅修复|
+|» arcadeCachedHitRate|number(double)|true|none||hitRate|
+|» singleArcadeInfo|[[SingleArcadeInfo](#schemasinglearcadeinfo)]|true|none||单独机厅设置信息|
+|»» singleName|string|true|none||单独机厅设置信息|
+|»» isEnableCustomName|boolean|true|none||是否启用自定义名称|
+|»» isEnableCustomAvatar|boolean|true|none||是否启用自定义头像|
+|»» isEnableTurboTicket|boolean|true|none||是否使用跑图券|
+|»» arcadeEnableSetting|[string]|true|none||是否启用自定义设置|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|arcadeType|TURBO|
+|arcadeType|SPECIAL_TYPE_ONE|
+
+状态码 **400**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **401**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **403**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **410**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **500**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+<a id="opIdarcadeInfoDetailApi"></a>
+
+## GET 去过的机厅详情
+
+GET /web/arcadeInfoDetail
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|arcadeName|query|String| 是 |arcadeName|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"arcadeInfo":{"arcadeName":"string","arcadeType":"TURBO","arcadePlayCount":0,"arcadeRequested":0,"arcadeCachedRequest":0,"arcadeFixedRequest":0,"arcadeCachedHitRate":0.1,"singleArcadeInfo":[{"singleName":"string","isEnableCustomName":true,"isEnableCustomAvatar":true,"isEnableTurboTicket":true,"arcadeEnableSetting":["string"]}]},"thirtyMinutesPlayer":0,"oneHourPlayer":0,"twoHoursPlayer":0,"thirtyMinutesPlayCount":0,"oneHourPlayCount":0,"twoHoursPlayCount":0,"playerList":[{"userIdHash":"string","maimaiName":"string","turboName":"string","isTurboAdmin":true,"playdate":"string"}],"thirtyMinutesPlayerList":[{"userIdHash":"string","maimaiName":"string","turboName":"string","isTurboAdmin":true,"playdate":"string"}]}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[ArcadeInfoDetailResponseVO](#schemaarcadeinfodetailresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+# Bot相关Api
 
 <a id="opIdunbindApi"></a>
 
@@ -1543,7 +1587,8 @@ POST /bot/unbind
 
 ```json
 {
-  "botKey": "string"
+  "token": "string",
+  "botId": "string"
 }
 ```
 
@@ -1551,16 +1596,16 @@ POST /bot/unbind
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|body|body|[BotUnbindRequestVO](#schemabotunbindrequestvo)| 否 |none|
+|body|body|[UnbindRequestVO](#schemaunbindrequestvo)| 否 |none|
 
 > 返回示例
 
-> 200 Response
+> 400 Response
 
 ```json
 {
-  "isSuccess": true,
-  "data": "string"
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1568,8 +1613,12 @@ POST /bot/unbind
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOString](#schemafinalresponsevostring)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOString](#schemafinalresponsevostring)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
 <a id="opIdbindApi"></a>
 
@@ -1577,14 +1626,12 @@ POST /bot/unbind
 
 POST /bot/bind
 
-RequestBody需要两个参数，一个botToken一个botName，botName是由你自己定的，只是用来标记是哪个bot，会在用户前端显示。用户想要绑定，需要去net点击右上角头像，找到botToken。
-
 > Body 请求参数
 
 ```json
 {
-  "botToken": "string",
-  "botName": "string"
+  "botName": "string",
+  "botToken": "string"
 }
 ```
 
@@ -1592,18 +1639,22 @@ RequestBody需要两个参数，一个botToken一个botName，botName是由你�
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|body|body|[BotBindRequestVO](#schemabotbindrequestvo)| 否 |none|
+|body|body|[Bot bind](#schemabot bind)| 否 |none|
 
 > 返回示例
 
 > 200 Response
 
+```
+{"botId":"string","botKey":"string"}
+```
+
+> 400 Response
+
 ```json
 {
-  "isSuccess": true,
-  "data": {
-    "botKey": "string"
-  }
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1611,36 +1662,472 @@ RequestBody需要两个参数，一个botToken一个botName，botName是由你�
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOBotBindResponseVO](#schemafinalresponsevobotbindresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOBotBindResponseVO](#schemafinalresponsevobotbindresponsevo)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[bind response](#schemabind response)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
-<a id="opIdbindListApi"></a>
+# 网页-用户权限
 
-## GET 绑定列表
+<a id="opIdupgradeTurboPermissionListApi"></a>
 
-GET /bot/bindList
+## GET 用户turbo历史权限修改记录
+
+GET /web/upgradeTurboPermissionList
+
+> 返回示例
+
+> 200 Response
+
+```
+[{"turboName":"string","permission":"string"}]
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|*anonymous*|[[UpgradeTurboPermissionResponseVO](#schemaupgradeturbopermissionresponsevo)]|false|none||none|
+|» turboName|string|true|none||turbo名称|
+|» permission|string|true|none||权限|
+
+状态码 **400**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **401**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **403**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **410**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **500**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+<a id="opIdturboPermissionApi"></a>
+
+## GET 用户turbo权限
+
+GET /web/turboPermission
+
+> 返回示例
+
+> 200 Response
+
+```
+{"turboName":"string","avatar":"string","permission":"string","warningTimes":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[TurboPermissionResponseVO](#schematurbopermissionresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdshowTurboPermissionApi"></a>
+
+## GET 用户turbo权限可进行的操作
+
+GET /web/showTurboPermission
+
+> 返回示例
+
+> 200 Response
+
+```
+[{"permissionDescription":"string","isGranted":true}]
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|*anonymous*|[[ShowTurboPermissionResponseVO](#schemashowturbopermissionresponsevo)]|false|none||none|
+|» permissionDescription|string|true|none||权限描述|
+|» isGranted|boolean|true|none||是否授予|
+
+状态码 **400**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **401**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **403**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **410**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **500**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+<a id="opIdexecuteRecordListApi"></a>
+
+## GET 用户turbo历史权限封禁记录
+
+GET /web/executeRecordList
+
+> 返回示例
+
+> 200 Response
+
+```
+[{"recordId":"string","turboName":"string","type":"string","reason":"string"}]
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|*anonymous*|[[ExecuteRecordResponseVO](#schemaexecuterecordresponsevo)]|false|none||none|
+|» recordId|string|true|none||记录id|
+|» turboName|string|true|none||turbo名称|
+|» type|string|true|none||类型|
+|» reason|string|true|none||理由|
+
+状态码 **400**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **401**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **403**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **410**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **500**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+# 网页-舞萌相关-QrCode
+
+<a id="opIdshowQrCommandListApi"></a>
+
+## GET 展示机台可操作的选项
+注意
+该部分功能较为高危，您在机台上应用的设置将作用于全部玩家，请谨慎使用。
+
+GET /web/showQrCommandList
+
+> 返回示例
+
+> 200 Response
+
+```
+[{"functionType":"LOGIN","setting":"NONE"}]
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|Inline|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+### 返回数据结构
+
+状态码 **200**
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|*anonymous*|[[ShowQrCommandListResponseVO](#schemashowqrcommandlistresponsevo)]|false|none||none|
+|» functionType|string|true|none||自定义类型|
+|» setting|string|true|none||设置|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|functionType|LOGIN|
+|functionType|KASTANJ_LOGIN|
+|functionType|SPECIAL_TYPE_ONE_LOGIN|
+|functionType|SETTING|
+|functionType|PING|
+|setting|NONE|
+|setting|MASK_USERNAME|
+|setting|UDEMAE_SHOW_ACHIEVEMENT|
+|setting|DISABLE_TICKET|
+|setting|DISABLE_CUSTOM_NAME|
+|setting|DISABLE_CUSTOM_AVATAR|
+
+状态码 **400**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **401**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **403**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **410**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+状态码 **500**
+
+*全局返回*
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|» code|integer(int32)|true|none||返回码|
+|» message|string|true|none||提示信息|
+
+<a id="opIdgetQrCommandDataApi"></a>
+
+## GET 获取机台操作的二维码
+注意
+该部分功能较为高危，您在机台上应用的设置将作用于全部玩家，请谨慎使用。
+
+GET /web/getQrCommandData
 
 ### 请求参数
 
 |名称|位置|类型|必选|说明|
 |---|---|---|---|---|
-|Authorization|header|string| 是 |权限校验Token。如果为正常网页，那么Bearer开头；如果为Bot，那么BotKey开头。|
+|functionType|query|string| 是 |none|
+|setting|query|string| 是 |none|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|functionType|LOGIN|
+|functionType|KASTANJ_LOGIN|
+|functionType|SPECIAL_TYPE_ONE_LOGIN|
+|functionType|SETTING|
+|functionType|PING|
+|setting|NONE|
+|setting|MASK_USERNAME|
+|setting|UDEMAE_SHOW_ACHIEVEMENT|
+|setting|DISABLE_TICKET|
+|setting|DISABLE_CUSTOM_NAME|
+|setting|DISABLE_CUSTOM_AVATAR|
 
 > 返回示例
 
 > 200 Response
 
+```
+{"qrData":"string","valid":"string"}
+```
+
+> 400 Response
+
 ```json
 {
-  "isSuccess": true,
-  "data": [
-    {
-      "botKey": "string",
-      "botName": "string",
-      "useCount": 0,
-      "bindDate": "string"
-    }
-  ]
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1648,43 +2135,162 @@ GET /bot/bindList
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[FinalResponseVOListBotBindListResponseVO](#schemafinalresponsevolistbotbindlistresponsevo)|
-|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|请求失败，请检查header和请求体是否正确|[FinalResponseVOListBotBindListResponseVO](#schemafinalresponsevolistbotbindlistresponsevo)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[GetQrCommandResponseVO](#schemagetqrcommandresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+# 网页-舞萌相关-排行榜
+
+<a id="opIdmusicRankingApi"></a>
+
+## GET 指定乐曲排行榜
+
+GET /web/musicRanking
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|musicId|query|integer(int64)| 是 |none|
+|musicDiff|query|integer(int32)| 是 |none|
+|onlyTurbo|query|boolean| 是 |none|
+|page|query|integer(int32)| 是 |none|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"content":[{"ranking":0,"maimaiName":"string","turboName":"string","achievement":0.1,"deluxScore":0}],"totalElements":0,"totalPages":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[PageDTOMusicRankingResponseVO](#schemapagedtomusicrankingresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIddxRatingRankingApi"></a>
+
+## GET Dx分数排行榜
+
+GET /web/dxRatingRanking
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|onlyTurbo|query|boolean| 是 |none|
+|page|query|integer(int32)| 是 |none|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"content":[{"ranking":0,"maimaiName":"string","turboName":"string","rating":0}],"totalElements":0,"totalPages":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[PageDTODxRatingRankingResponseVO](#schemapagedtodxratingrankingresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
+
+<a id="opIdachievementRankingApi"></a>
+
+## GET Dx分数排行榜
+
+GET /web/achievementRanking
+
+### 请求参数
+
+|名称|位置|类型|必选|说明|
+|---|---|---|---|---|
+|onlyTurbo|query|boolean| 是 |none|
+|page|query|integer(int32)| 是 |none|
+
+> 返回示例
+
+> 200 Response
+
+```
+{"content":[{"ranking":0,"maimaiName":"string","turboName":"string","achievement":0.1}],"totalElements":0,"totalPages":0}
+```
+
+> 400 Response
+
+```json
+{
+  "code": 0,
+  "message": "string"
+}
+```
+
+### 返回结果
+
+|状态码|状态码含义|说明|数据模型|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|[PageDTOAchievementRankingResponseVO](#schemapagedtoachievementrankingresponsevo)|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
 # 权限相关
 
-<a id="opIdtokenValidationApi"></a>
+<a id="opIdshowPermission"></a>
 
-## POST token验证
+## GET 展示用户权限
 
-POST /auth/tokenValidation
-
-> Body 请求参数
-
-```json
-{
-  "token": "string",
-  "refreshToken": "string",
-  "botToken": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[TokenValidationRequestVO](#schematokenvalidationrequestvo)| 否 |none|
+GET /permission/showPermission
 
 > 返回示例
 
 > 200 Response
 
+```
+"ADMIN"
+```
+
+> 400 Response
+
 ```json
 {
-  "isSuccess": true,
-  "data": {
-    "token": "string"
-  }
+  "code": 0,
+  "message": "string"
 }
 ```
 
@@ -1692,3076 +2298,21 @@ POST /auth/tokenValidation
 
 |状态码|状态码含义|说明|数据模型|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVORefreshTokenResponseVO](#schemafinalresponsevorefreshtokenresponsevo)|
-
-<a id="opIduserResetPasswordApi"></a>
-
-## POST 重置密码
-
-POST /auth/resetPassword
-
-> Body 请求参数
-
-```json
-{
-  "email": "string",
-  "captchaToken": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[ResetPasswordRequestVO](#schemaresetpasswordrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
-
-<a id="opIduserResetPasswordVerifyApi"></a>
-
-## POST 重置密码-验证
-
-POST /auth/resetPassword/verify
-
-> Body 请求参数
-
-```json
-{
-  "token": "string",
-  "valid": "string",
-  "password": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[ResetPasswordValidRequestVO](#schemaresetpasswordvalidrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
-
-<a id="opIduserResetPasswordIsValidApi"></a>
-
-## POST 重置密码
-
-POST /auth/resetPassword/isValid
-
-> Body 请求参数
-
-```json
-{
-  "token": "string",
-  "valid": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[ResetPasswordIsValidRequestVO](#schemaresetpasswordisvalidrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
-
-<a id="opIduserRegisterApi"></a>
-
-## POST 注册
-
-POST /auth/register
-
-> Body 请求参数
-
-```json
-{
-  "username": "string",
-  "password": "string",
-  "email": "string",
-  "qqNumber": "string",
-  "weChatID": "string",
-  "captchaToken": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[RegisterRequestVO](#schemaregisterrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "msg": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVORegisterResponseVO](#schemafinalresponsevoregisterresponsevo)|
-
-<a id="opIduserRegisterCommitApi"></a>
-
-## POST 注册验证
-
-POST /auth/register/verify
-
-> Body 请求参数
-
-```json
-{
-  "token": "string",
-  "valid": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[RegisterVerifyRequestVO](#schemaregisterverifyrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
-
-<a id="opIduserRefreshTokenApi"></a>
-
-## POST 刷新Token
-
-POST /auth/refreshToken
-
-> Body 请求参数
-
-```json
-{
-  "refreshToken": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[RefreshTokenRequestVO](#schemarefreshtokenrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "token": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVORefreshTokenResponseVO](#schemafinalresponsevorefreshtokenresponsevo)|
-
-<a id="opIduserLogoutApi"></a>
-
-## POST 登出
-
-POST /auth/logout
-
-> Body 请求参数
-
-```json
-{
-  "token": "string",
-  "refreshToken": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[LogoutRequestVO](#schemalogoutrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
-
-<a id="opIduserLoginApi"></a>
-
-## POST 登录
-
-POST /auth/login
-
-> Body 请求参数
-
-```json
-{
-  "username": "string",
-  "password": "string",
-  "captchaToken": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[LoginRequestVO](#schemaloginrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "token": "string",
-    "refreshToken": "string"
-  }
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVOLoginResponseVO](#schemafinalresponsevologinresponsevo)|
-
-<a id="opIdisUsernameValidApi"></a>
-
-## POST 用户名是否有效
-
-POST /auth/isUsernameValid
-
-> Body 请求参数
-
-```json
-{
-  "username": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[RegisterUsernameValidRequestVO](#schemaregisterusernamevalidrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
-
-<a id="opIdisSecondStepsValidApi"></a>
-
-## POST 二次确认
-
-POST /auth/isSecondStepsValid
-
-> Body 请求参数
-
-```json
-{
-  "email": "string",
-  "qqNumber": "string"
-}
-```
-
-### 请求参数
-
-|名称|位置|类型|必选|说明|
-|---|---|---|---|---|
-|body|body|[RegisterSecondStepsValidRequestVO](#schemaregistersecondstepsvalidrequestvo)| 否 |none|
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-```
-
-### 返回结果
-
-|状态码|状态码含义|说明|数据模型|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[FinalResponseVONull](#schemafinalresponsevonull)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|成功请求|string|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|captcha验证失败或者是不合法的数据|[Global exception](#schemaglobal exception)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|请求的Token缺失或Token不合法，请检查|[Global exception](#schemaglobal exception)|
+|403|[Forbidden](https://tools.ietf.org/html/rfc7231#section-6.5.3)|权限不足，请检查请求体的权限|[Global exception](#schemaglobal exception)|
+|410|[Gone](https://tools.ietf.org/html/rfc7231#section-6.5.9)|该用户已被封禁，请联系管理员进行处理|[Global exception](#schemaglobal exception)|
+|500|[Internal Server Error](https://tools.ietf.org/html/rfc7231#section-6.6.1)|我抄，服务器出现内部错误了，怎么会这样|[Global exception](#schemaglobal exception)|
 
 # 数据模型
 
-<h2 id="tocS_FinalResponseVOListBotBindListResponseVO">FinalResponseVOListBotBindListResponseVO</h2>
-
-<a id="schemafinalresponsevolistbotbindlistresponsevo"></a>
-<a id="schema_FinalResponseVOListBotBindListResponseVO"></a>
-<a id="tocSfinalresponsevolistbotbindlistresponsevo"></a>
-<a id="tocsfinalresponsevolistbotbindlistresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": [
-    {
-      "botKey": "string",
-      "botName": "string",
-      "useCount": 0,
-      "bindDate": "string"
-    }
-  ]
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[[BotBindListResponseVO](#schemabotbindlistresponsevo)]|false|none||none|
-
-<h2 id="tocS_BotBindListResponseVO">BotBindListResponseVO</h2>
-
-<a id="schemabotbindlistresponsevo"></a>
-<a id="schema_BotBindListResponseVO"></a>
-<a id="tocSbotbindlistresponsevo"></a>
-<a id="tocsbotbindlistresponsevo"></a>
-
-```json
-{
-  "botKey": "string",
-  "botName": "string",
-  "useCount": 0,
-  "bindDate": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|botKey|string|true|none||none|
-|botName|string|true|none||none|
-|useCount|integer(int32)|true|none||none|
-|bindDate|string|true|none||none|
-
-<h2 id="tocS_FinalResponseVOPermissionEnum">FinalResponseVOPermissionEnum</h2>
-
-<a id="schemafinalresponsevopermissionenum"></a>
-<a id="schema_FinalResponseVOPermissionEnum"></a>
-<a id="tocSfinalresponsevopermissionenum"></a>
-<a id="tocsfinalresponsevopermissionenum"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": "ADMIN"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|string|false|none||none|
-
-#### 枚举值
-
-|属性|值|
-|---|---|
-|data|ADMIN|
-|data|BUILDER|
-|data|AUTHORIZER|
-|data|USER|
-|data|BANNED|
-
-<h2 id="tocS_QrResponseVO">QrResponseVO</h2>
-
-<a id="schemaqrresponsevo"></a>
-<a id="schema_QrResponseVO"></a>
-<a id="tocSqrresponsevo"></a>
-<a id="tocsqrresponsevo"></a>
-
-```json
-{
-  "qrCodeBase64": "string",
-  "qrCodeValidTime": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|qrCodeBase64|string|true|none||none|
-|qrCodeValidTime|string|true|none||none|
-
-<h2 id="tocS_FinalResponseVOQrResponseVO">FinalResponseVOQrResponseVO</h2>
-
-<a id="schemafinalresponsevoqrresponsevo"></a>
-<a id="schema_FinalResponseVOQrResponseVO"></a>
-<a id="tocSfinalresponsevoqrresponsevo"></a>
-<a id="tocsfinalresponsevoqrresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "qrCodeBase64": "string",
-    "qrCodeValidTime": "string"
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[QrResponseVO](#schemaqrresponsevo)|false|none||none|
-
-<h2 id="tocS_HomeResponseVO">HomeResponseVO</h2>
-
-<a id="schemahomeresponsevo"></a>
-<a id="schema_HomeResponseVO"></a>
-<a id="tocShomeresponsevo"></a>
-<a id="tocshomeresponsevo"></a>
-
-```json
-{
-  "playerName": "string",
-  "playerRating": 0,
-  "totalAwake": 0,
-  "courseRank": 0,
-  "classRank": 0,
-  "iconId": 0,
-  "loginAccount": "string",
-  "loginEmail": "string",
-  "lastPlayDate": "string",
-  "banState": 0,
-  "isPortrait": true,
-  "portrait": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|playerName|string|true|none||none|
-|playerRating|integer(int32)|true|none||none|
-|totalAwake|integer(int32)|true|none||none|
-|courseRank|integer(int32)|true|none||none|
-|classRank|integer(int32)|true|none||none|
-|iconId|integer(int32)|true|none||none|
-|loginAccount|string|true|none||none|
-|loginEmail|string|true|none||none|
-|lastPlayDate|string|true|none||none|
-|banState|integer(int32)|true|none||none|
-|isPortrait|boolean|true|none||none|
-|portrait|string|false|none||none|
-
-<h2 id="tocS_FinalResponseVOHomeResponseVO">FinalResponseVOHomeResponseVO</h2>
-
-<a id="schemafinalresponsevohomeresponsevo"></a>
-<a id="schema_FinalResponseVOHomeResponseVO"></a>
-<a id="tocSfinalresponsevohomeresponsevo"></a>
-<a id="tocsfinalresponsevohomeresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "playerName": "string",
-    "playerRating": 0,
-    "totalAwake": 0,
-    "courseRank": 0,
-    "classRank": 0,
-    "iconId": 0,
-    "loginAccount": "string",
-    "loginEmail": "string",
-    "lastPlayDate": "string",
-    "banState": 0,
-    "isPortrait": true,
-    "portrait": "string"
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[HomeResponseVO](#schemahomeresponsevo)|false|none||none|
-
-<h2 id="tocS_PacketResultHourDTO">PacketResultHourDTO</h2>
-
-<a id="schemapacketresulthourdto"></a>
-<a id="schema_PacketResultHourDTO"></a>
-<a id="tocSpacketresulthourdto"></a>
-<a id="tocspacketresulthourdto"></a>
-
-```json
-{
-  "zlibSkippedCount": 0,
-  "retryExceptionCount": 0,
-  "panicCount": 0,
-  "allPacketNums": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|zlibSkippedCount|integer(int32)|true|none||none|
-|retryExceptionCount|integer(int32)|true|none||none|
-|panicCount|integer(int32)|true|none||none|
-|allPacketNums|integer(int32)|true|none||none|
-
-<h2 id="tocS_PacketResultBeforeDTO">PacketResultBeforeDTO</h2>
-
-<a id="schemapacketresultbeforedto"></a>
-<a id="schema_PacketResultBeforeDTO"></a>
-<a id="tocSpacketresultbeforedto"></a>
-<a id="tocspacketresultbeforedto"></a>
-
-```json
-{
-  "zlibSkippedCount": 0,
-  "retryExceptionCount": 0,
-  "panicCount": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|zlibSkippedCount|integer(int32)|true|none||none|
-|retryExceptionCount|integer(int32)|true|none||none|
-|panicCount|integer(int32)|true|none||none|
-
-<h2 id="tocS_NetworkResponseVO">NetworkResponseVO</h2>
-
-<a id="schemanetworkresponsevo"></a>
-<a id="schema_NetworkResponseVO"></a>
-<a id="tocSnetworkresponsevo"></a>
-<a id="tocsnetworkresponsevo"></a>
-
-```json
-{
-  "packets": {
-    "zlibSkippedCount": 0,
-    "retryExceptionCount": 0,
-    "panicCount": 0,
-    "allPacketNums": 0
-  },
-  "packetsBefore": {
-    "zlibSkippedCount": 0,
-    "retryExceptionCount": 0,
-    "panicCount": 0
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|packets|[PacketResultHourDTO](#schemapacketresulthourdto)|true|none||none|
-|packetsBefore|[PacketResultBeforeDTO](#schemapacketresultbeforedto)|true|none||none|
-
-<h2 id="tocS_FinalResponseVONetworkResponseVO">FinalResponseVONetworkResponseVO</h2>
-
-<a id="schemafinalresponsevonetworkresponsevo"></a>
-<a id="schema_FinalResponseVONetworkResponseVO"></a>
-<a id="tocSfinalresponsevonetworkresponsevo"></a>
-<a id="tocsfinalresponsevonetworkresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "packets": {
-      "zlibSkippedCount": 0,
-      "retryExceptionCount": 0,
-      "panicCount": 0,
-      "allPacketNums": 0
-    },
-    "packetsBefore": {
-      "zlibSkippedCount": 0,
-      "retryExceptionCount": 0,
-      "panicCount": 0
-    }
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[NetworkResponseVO](#schemanetworkresponsevo)|false|none||none|
-
-<h2 id="tocS_PermissionResponseVO">PermissionResponseVO</h2>
-
-<a id="schemapermissionresponsevo"></a>
-<a id="schema_PermissionResponseVO"></a>
-<a id="tocSpermissionresponsevo"></a>
-<a id="tocspermissionresponsevo"></a>
-
-```json
-{
-  "permissionLevel": "ADMIN",
-  "username": "string",
-  "qqNumber": "string",
-  "permissionList": [
-    {
-      "permissionDescription": "string",
-      "isGranted": true
-    }
-  ],
-  "authorizationsList": [
-    {
-      "userBefore": "ADMIN",
-      "userAfter": "ADMIN",
-      "authorizationUsername": "string",
-      "changedDate": "string"
-    }
-  ],
-  "bannedList": [
-    {
-      "bannedUsername": "string",
-      "changedByUsername": "string",
-      "changedDate": "string"
-    }
-  ]
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|permissionLevel|string|true|none||none|
-|username|string|true|none||none|
-|qqNumber|string|true|none||none|
-|permissionList|[[PermissionListResponseVO](#schemapermissionlistresponsevo)]|true|none||none|
-|authorizationsList|[[AuthorizationResponseVO](#schemaauthorizationresponsevo)]|true|none||none|
-|bannedList|[[BanResponseVO](#schemabanresponsevo)]|true|none||none|
-
-#### 枚举值
-
-|属性|值|
-|---|---|
-|permissionLevel|ADMIN|
-|permissionLevel|BUILDER|
-|permissionLevel|AUTHORIZER|
-|permissionLevel|USER|
-|permissionLevel|BANNED|
-
-<h2 id="tocS_PermissionListResponseVO">PermissionListResponseVO</h2>
-
-<a id="schemapermissionlistresponsevo"></a>
-<a id="schema_PermissionListResponseVO"></a>
-<a id="tocSpermissionlistresponsevo"></a>
-<a id="tocspermissionlistresponsevo"></a>
-
-```json
-{
-  "permissionDescription": "string",
-  "isGranted": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|permissionDescription|string|true|none||none|
-|isGranted|boolean|true|none||none|
-
-<h2 id="tocS_FinalResponseVOPermissionResponseVO">FinalResponseVOPermissionResponseVO</h2>
-
-<a id="schemafinalresponsevopermissionresponsevo"></a>
-<a id="schema_FinalResponseVOPermissionResponseVO"></a>
-<a id="tocSfinalresponsevopermissionresponsevo"></a>
-<a id="tocsfinalresponsevopermissionresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "permissionLevel": "ADMIN",
-    "username": "string",
-    "qqNumber": "string",
-    "permissionList": [
-      {
-        "permissionDescription": "string",
-        "isGranted": true
-      }
-    ],
-    "authorizationsList": [
-      {
-        "userBefore": "ADMIN",
-        "userAfter": "ADMIN",
-        "authorizationUsername": "string",
-        "changedDate": "string"
-      }
-    ],
-    "bannedList": [
-      {
-        "bannedUsername": "string",
-        "changedByUsername": "string",
-        "changedDate": "string"
-      }
-    ]
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[PermissionResponseVO](#schemapermissionresponsevo)|false|none||none|
-
-<h2 id="tocS_BanResponseVO">BanResponseVO</h2>
-
-<a id="schemabanresponsevo"></a>
-<a id="schema_BanResponseVO"></a>
-<a id="tocSbanresponsevo"></a>
-<a id="tocsbanresponsevo"></a>
-
-```json
-{
-  "bannedUsername": "string",
-  "changedByUsername": "string",
-  "changedDate": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|bannedUsername|string|true|none||none|
-|changedByUsername|string|true|none||none|
-|changedDate|string|true|none||none|
-
-<h2 id="tocS_AuthorizationResponseVO">AuthorizationResponseVO</h2>
-
-<a id="schemaauthorizationresponsevo"></a>
-<a id="schema_AuthorizationResponseVO"></a>
-<a id="tocSauthorizationresponsevo"></a>
-<a id="tocsauthorizationresponsevo"></a>
-
-```json
-{
-  "userBefore": "ADMIN",
-  "userAfter": "ADMIN",
-  "authorizationUsername": "string",
-  "changedDate": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|userBefore|string|true|none||none|
-|userAfter|string|true|none||none|
-|authorizationUsername|string|true|none||none|
-|changedDate|string|true|none||none|
-
-#### 枚举值
-
-|属性|值|
-|---|---|
-|userBefore|ADMIN|
-|userBefore|BUILDER|
-|userBefore|AUTHORIZER|
-|userBefore|USER|
-|userBefore|BANNED|
-|userAfter|ADMIN|
-|userAfter|BUILDER|
-|userAfter|AUTHORIZER|
-|userAfter|USER|
-|userAfter|BANNED|
-
-<h2 id="tocS_SortObject">SortObject</h2>
-
-<a id="schemasortobject"></a>
-<a id="schema_SortObject"></a>
-<a id="tocSsortobject"></a>
-<a id="tocssortobject"></a>
-
-```json
-{
-  "empty": true,
-  "sorted": true,
-  "unsorted": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|empty|boolean|false|none||none|
-|sorted|boolean|false|none||none|
-|unsorted|boolean|false|none||none|
-
-<h2 id="tocS_PhotoResponseVO">PhotoResponseVO</h2>
-
-<a id="schemaphotoresponsevo"></a>
-<a id="schema_PhotoResponseVO"></a>
-<a id="tocSphotoresponsevo"></a>
-<a id="tocsphotoresponsevo"></a>
-
-```json
-{
-  "photoList": {
-    "totalPages": 0,
-    "totalElements": 0,
-    "size": 0,
-    "content": [
-      {
-        "photoUUID": "string",
-        "photoImg": "string",
-        "date": "string",
-        "isFavorite": true
-      }
-    ],
-    "number": 0,
-    "sort": {
-      "empty": true,
-      "sorted": true,
-      "unsorted": true
-    },
-    "pageable": {
-      "offset": 0,
-      "sort": {
-        "empty": true,
-        "sorted": true,
-        "unsorted": true
-      },
-      "paged": true,
-      "pageNumber": 0,
-      "pageSize": 0,
-      "unpaged": true
-    },
-    "numberOfElements": 0,
-    "first": true,
-    "last": true,
-    "empty": true
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|photoList|[PagePhotoListVO](#schemapagephotolistvo)|true|none||none|
-
-<h2 id="tocS_PhotoListVO">PhotoListVO</h2>
-
-<a id="schemaphotolistvo"></a>
-<a id="schema_PhotoListVO"></a>
-<a id="tocSphotolistvo"></a>
-<a id="tocsphotolistvo"></a>
-
-```json
-{
-  "photoUUID": "string",
-  "photoImg": "string",
-  "date": "string",
-  "isFavorite": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|photoUUID|string|true|none||none|
-|photoImg|string(byte)|true|none||none|
-|date|string|true|none||none|
-|isFavorite|boolean|true|none||none|
-
-<h2 id="tocS_PageableObject">PageableObject</h2>
-
-<a id="schemapageableobject"></a>
-<a id="schema_PageableObject"></a>
-<a id="tocSpageableobject"></a>
-<a id="tocspageableobject"></a>
-
-```json
-{
-  "offset": 0,
-  "sort": {
-    "empty": true,
-    "sorted": true,
-    "unsorted": true
-  },
-  "paged": true,
-  "pageNumber": 0,
-  "pageSize": 0,
-  "unpaged": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|offset|integer(int64)|false|none||none|
-|sort|[SortObject](#schemasortobject)|false|none||none|
-|paged|boolean|false|none||none|
-|pageNumber|integer(int32)|false|none||none|
-|pageSize|integer(int32)|false|none||none|
-|unpaged|boolean|false|none||none|
-
-<h2 id="tocS_PagePhotoListVO">PagePhotoListVO</h2>
-
-<a id="schemapagephotolistvo"></a>
-<a id="schema_PagePhotoListVO"></a>
-<a id="tocSpagephotolistvo"></a>
-<a id="tocspagephotolistvo"></a>
-
-```json
-{
-  "totalPages": 0,
-  "totalElements": 0,
-  "size": 0,
-  "content": [
-    {
-      "photoUUID": "string",
-      "photoImg": "string",
-      "date": "string",
-      "isFavorite": true
-    }
-  ],
-  "number": 0,
-  "sort": {
-    "empty": true,
-    "sorted": true,
-    "unsorted": true
-  },
-  "pageable": {
-    "offset": 0,
-    "sort": {
-      "empty": true,
-      "sorted": true,
-      "unsorted": true
-    },
-    "paged": true,
-    "pageNumber": 0,
-    "pageSize": 0,
-    "unpaged": true
-  },
-  "numberOfElements": 0,
-  "first": true,
-  "last": true,
-  "empty": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|totalPages|integer(int32)|false|none||none|
-|totalElements|integer(int64)|false|none||none|
-|size|integer(int32)|false|none||none|
-|content|[[PhotoListVO](#schemaphotolistvo)]|false|none||none|
-|number|integer(int32)|false|none||none|
-|sort|[SortObject](#schemasortobject)|false|none||none|
-|pageable|[PageableObject](#schemapageableobject)|false|none||none|
-|numberOfElements|integer(int32)|false|none||none|
-|first|boolean|false|none||none|
-|last|boolean|false|none||none|
-|empty|boolean|false|none||none|
-
-<h2 id="tocS_FinalResponseVOPhotoResponseVO">FinalResponseVOPhotoResponseVO</h2>
-
-<a id="schemafinalresponsevophotoresponsevo"></a>
-<a id="schema_FinalResponseVOPhotoResponseVO"></a>
-<a id="tocSfinalresponsevophotoresponsevo"></a>
-<a id="tocsfinalresponsevophotoresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "photoList": {
-      "totalPages": 0,
-      "totalElements": 0,
-      "size": 0,
-      "content": [
-        {
-          "photoUUID": "string",
-          "photoImg": "string",
-          "date": "string",
-          "isFavorite": true
-        }
-      ],
-      "number": 0,
-      "sort": {
-        "empty": true,
-        "sorted": true,
-        "unsorted": true
-      },
-      "pageable": {
-        "offset": 0,
-        "sort": {
-          "empty": null,
-          "sorted": null,
-          "unsorted": null
-        },
-        "paged": true,
-        "pageNumber": 0,
-        "pageSize": 0,
-        "unpaged": true
-      },
-      "numberOfElements": 0,
-      "first": true,
-      "last": true,
-      "empty": true
-    }
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[PhotoResponseVO](#schemaphotoresponsevo)|false|none||none|
-
-<h2 id="tocS_UserInfoVO">UserInfoVO</h2>
-
-<a id="schemauserinfovo"></a>
-<a id="schema_UserInfoVO"></a>
-<a id="tocSuserinfovo"></a>
-<a id="tocsuserinfovo"></a>
-
-```json
-{
-  "name": "string",
-  "playCount": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|name|string|true|none||none|
-|playCount|integer(int32)|true|none||none|
-
-<h2 id="tocS_SyncVO">SyncVO</h2>
-
-<a id="schemasyncvo"></a>
-<a id="schema_SyncVO"></a>
-<a id="tocSsyncvo"></a>
-<a id="tocssyncvo"></a>
-
-```json
-{
-  "fsdp": 0,
-  "fsd": 0,
-  "fsp": 0,
-  "fs": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|fsdp|integer(int32)|true|none||none|
-|fsd|integer(int32)|true|none||none|
-|fsp|integer(int32)|true|none||none|
-|fs|integer(int32)|true|none||none|
-
-<h2 id="tocS_PlayerDataResponseVO">PlayerDataResponseVO</h2>
-
-<a id="schemaplayerdataresponsevo"></a>
-<a id="schema_PlayerDataResponseVO"></a>
-<a id="tocSplayerdataresponsevo"></a>
-<a id="tocsplayerdataresponsevo"></a>
-
-```json
-{
-  "achievement": {
-    "sssp": 0,
-    "sss": 0,
-    "ssp": 0,
-    "ss": 0,
-    "sp": 0,
-    "s": 0
-  },
-  "combo": {
-    "app": 0,
-    "ap": 0,
-    "fcp": 0,
-    "fc": 0
-  },
-  "sync": {
-    "fsdp": 0,
-    "fsd": 0,
-    "fsp": 0,
-    "fs": 0
-  },
-  "userInfo": {
-    "name": "string",
-    "playCount": 0
-  },
-  "allMusic": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|achievement|[AchievementVO](#schemaachievementvo)|true|none||none|
-|combo|[ComboVO](#schemacombovo)|true|none||none|
-|sync|[SyncVO](#schemasyncvo)|true|none||none|
-|userInfo|[UserInfoVO](#schemauserinfovo)|true|none||none|
-|allMusic|integer(int32)|true|none||none|
-
-<h2 id="tocS_FinalResponseVOPlayerDataResponseVO">FinalResponseVOPlayerDataResponseVO</h2>
-
-<a id="schemafinalresponsevoplayerdataresponsevo"></a>
-<a id="schema_FinalResponseVOPlayerDataResponseVO"></a>
-<a id="tocSfinalresponsevoplayerdataresponsevo"></a>
-<a id="tocsfinalresponsevoplayerdataresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "achievement": {
-      "sssp": 0,
-      "sss": 0,
-      "ssp": 0,
-      "ss": 0,
-      "sp": 0,
-      "s": 0
-    },
-    "combo": {
-      "app": 0,
-      "ap": 0,
-      "fcp": 0,
-      "fc": 0
-    },
-    "sync": {
-      "fsdp": 0,
-      "fsd": 0,
-      "fsp": 0,
-      "fs": 0
-    },
-    "userInfo": {
-      "name": "string",
-      "playCount": 0
-    },
-    "allMusic": 0
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[PlayerDataResponseVO](#schemaplayerdataresponsevo)|false|none||none|
-
-<h2 id="tocS_ComboVO">ComboVO</h2>
-
-<a id="schemacombovo"></a>
-<a id="schema_ComboVO"></a>
-<a id="tocScombovo"></a>
-<a id="tocscombovo"></a>
-
-```json
-{
-  "app": 0,
-  "ap": 0,
-  "fcp": 0,
-  "fc": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|app|integer(int32)|true|none||none|
-|ap|integer(int32)|true|none||none|
-|fcp|integer(int32)|true|none||none|
-|fc|integer(int32)|true|none||none|
-
-<h2 id="tocS_AchievementVO">AchievementVO</h2>
-
-<a id="schemaachievementvo"></a>
-<a id="schema_AchievementVO"></a>
-<a id="tocSachievementvo"></a>
-<a id="tocsachievementvo"></a>
-
-```json
-{
-  "sssp": 0,
-  "sss": 0,
-  "ssp": 0,
-  "ss": 0,
-  "sp": 0,
-  "s": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|sssp|integer(int32)|true|none||none|
-|sss|integer(int32)|true|none||none|
-|ssp|integer(int32)|true|none||none|
-|ss|integer(int32)|true|none||none|
-|sp|integer(int32)|true|none||none|
-|s|integer(int32)|true|none||none|
-
-<h2 id="tocS_UserRanking">UserRanking</h2>
-
-<a id="schemauserranking"></a>
-<a id="schema_UserRanking"></a>
-<a id="tocSuserranking"></a>
-<a id="tocsuserranking"></a>
-
-```json
-{
-  "playerRanking": 0,
-  "playerRating": 0,
-  "playerPercent": 0,
-  "isIgnored": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|playerRanking|integer(int32)|true|none||none|
-|playerRating|integer(int32)|true|none||none|
-|playerPercent|number(double)|true|none||none|
-|isIgnored|boolean|true|none||none|
-
-<h2 id="tocS_SinglePlayerRanking">SinglePlayerRanking</h2>
-
-<a id="schemasingleplayerranking"></a>
-<a id="schema_SinglePlayerRanking"></a>
-<a id="tocSsingleplayerranking"></a>
-<a id="tocssingleplayerranking"></a>
-
-```json
-{
-  "playerRanking": 0,
-  "playerName": "string",
-  "playerRating": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|playerRanking|integer(int32)|true|none||none|
-|playerName|string|true|none||none|
-|playerRating|integer(int32)|true|none||none|
-
-<h2 id="tocS_RankingResponseVO">RankingResponseVO</h2>
-
-<a id="schemarankingresponsevo"></a>
-<a id="schema_RankingResponseVO"></a>
-<a id="tocSrankingresponsevo"></a>
-<a id="tocsrankingresponsevo"></a>
-
-```json
-{
-  "singlePlayerRanking": [
-    {
-      "playerRanking": 0,
-      "playerName": "string",
-      "playerRating": 0
-    }
-  ],
-  "userRanking": {
-    "playerRanking": 0,
-    "playerRating": 0,
-    "playerPercent": 0,
-    "isIgnored": true
-  },
-  "totalPages": 0,
-  "totalElements": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|singlePlayerRanking|[[SinglePlayerRanking](#schemasingleplayerranking)]|true|none||none|
-|userRanking|[UserRanking](#schemauserranking)|true|none||none|
-|totalPages|integer(int32)|true|none||none|
-|totalElements|integer(int64)|true|none||none|
-
-<h2 id="tocS_FinalResponseVORankingResponseVO">FinalResponseVORankingResponseVO</h2>
-
-<a id="schemafinalresponsevorankingresponsevo"></a>
-<a id="schema_FinalResponseVORankingResponseVO"></a>
-<a id="tocSfinalresponsevorankingresponsevo"></a>
-<a id="tocsfinalresponsevorankingresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "singlePlayerRanking": [
-      {
-        "playerRanking": 0,
-        "playerName": "string",
-        "playerRating": 0
-      }
-    ],
-    "userRanking": {
-      "playerRanking": 0,
-      "playerRating": 0,
-      "playerPercent": 0,
-      "isIgnored": true
-    },
-    "totalPages": 0,
-    "totalElements": 0
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[RankingResponseVO](#schemarankingresponsevo)|false|none||none|
-
-<h2 id="tocS_UserAchievementRanking">UserAchievementRanking</h2>
-
-<a id="schemauserachievementranking"></a>
-<a id="schema_UserAchievementRanking"></a>
-<a id="tocSuserachievementranking"></a>
-<a id="tocsuserachievementranking"></a>
-
-```json
-{
-  "playerRanking": 0,
-  "playerTotalAchievement": 0,
-  "playerPercent": 0,
-  "isIgnored": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|playerRanking|integer(int32)|true|none||none|
-|playerTotalAchievement|integer(int64)|true|none||none|
-|playerPercent|number(double)|true|none||none|
-|isIgnored|boolean|true|none||none|
-
-<h2 id="tocS_SinglePlayerAchievementRanking">SinglePlayerAchievementRanking</h2>
-
-<a id="schemasingleplayerachievementranking"></a>
-<a id="schema_SinglePlayerAchievementRanking"></a>
-<a id="tocSsingleplayerachievementranking"></a>
-<a id="tocssingleplayerachievementranking"></a>
-
-```json
-{
-  "playerRanking": 0,
-  "playerName": "string",
-  "playerTotalAchievement": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|playerRanking|integer(int32)|true|none||none|
-|playerName|string|true|none||none|
-|playerTotalAchievement|integer(int64)|true|none||none|
-
-<h2 id="tocS_RankingAchievementResponseVO">RankingAchievementResponseVO</h2>
-
-<a id="schemarankingachievementresponsevo"></a>
-<a id="schema_RankingAchievementResponseVO"></a>
-<a id="tocSrankingachievementresponsevo"></a>
-<a id="tocsrankingachievementresponsevo"></a>
-
-```json
-{
-  "singlePlayerRanking": [
-    {
-      "playerRanking": 0,
-      "playerName": "string",
-      "playerTotalAchievement": 0
-    }
-  ],
-  "userRanking": {
-    "playerRanking": 0,
-    "playerTotalAchievement": 0,
-    "playerPercent": 0,
-    "isIgnored": true
-  },
-  "totalPages": 0,
-  "totalElements": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|singlePlayerRanking|[[SinglePlayerAchievementRanking](#schemasingleplayerachievementranking)]|true|none||none|
-|userRanking|[UserAchievementRanking](#schemauserachievementranking)|true|none||none|
-|totalPages|integer(int32)|true|none||none|
-|totalElements|integer(int64)|true|none||none|
-
-<h2 id="tocS_FinalResponseVORankingAchievementResponseVO">FinalResponseVORankingAchievementResponseVO</h2>
-
-<a id="schemafinalresponsevorankingachievementresponsevo"></a>
-<a id="schema_FinalResponseVORankingAchievementResponseVO"></a>
-<a id="tocSfinalresponsevorankingachievementresponsevo"></a>
-<a id="tocsfinalresponsevorankingachievementresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "singlePlayerRanking": [
-      {
-        "playerRanking": 0,
-        "playerName": "string",
-        "playerTotalAchievement": 0
-      }
-    ],
-    "userRanking": {
-      "playerRanking": 0,
-      "playerTotalAchievement": 0,
-      "playerPercent": 0,
-      "isIgnored": true
-    },
-    "totalPages": 0,
-    "totalElements": 0
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[RankingAchievementResponseVO](#schemarankingachievementresponsevo)|false|none||none|
-
-<h2 id="tocS_UserInfo">UserInfo</h2>
-
-<a id="schemauserinfo"></a>
-<a id="schema_UserInfo"></a>
-<a id="tocSuserinfo"></a>
-<a id="tocsuserinfo"></a>
-
-```json
-{
-  "trackNumber": 0,
-  "musicPlayDate": "string",
-  "isClear": true,
-  "isAchievementNewRecord": true,
-  "isDxScoreNewRecord": true,
-  "comboStatusImg": "string",
-  "syncStatusImg": "string",
-  "userDxScore": 0,
-  "userBeforeRating": 0,
-  "userAfterRating": 0,
-  "userAchievementStr": "string",
-  "userAchievementRankImg": "string",
-  "userCombo": 0,
-  "maxCombo": 0,
-  "userSync": 0,
-  "maxSync": 0,
-  "dxStarImg": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|trackNumber|integer(int32)|true|none||none|
-|musicPlayDate|string|true|none||none|
-|isClear|boolean|true|none||none|
-|isAchievementNewRecord|boolean|true|none||none|
-|isDxScoreNewRecord|boolean|true|none||none|
-|comboStatusImg|string|true|none||none|
-|syncStatusImg|string|true|none||none|
-|userDxScore|integer(int32)|true|none||none|
-|userBeforeRating|integer(int32)|true|none||none|
-|userAfterRating|integer(int32)|true|none||none|
-|userAchievementStr|string|true|none||none|
-|userAchievementRankImg|string|true|none||none|
-|userCombo|integer(int32)|true|none||none|
-|maxCombo|integer(int32)|true|none||none|
-|userSync|integer(int32)|true|none||none|
-|maxSync|integer(int32)|true|none||none|
-|dxStarImg|string|true|none||none|
-
-<h2 id="tocS_RecordResponseVO">RecordResponseVO</h2>
-
-<a id="schemarecordresponsevo"></a>
-<a id="schema_RecordResponseVO"></a>
-<a id="tocSrecordresponsevo"></a>
-<a id="tocsrecordresponsevo"></a>
-
-```json
-{
-  "show": true,
-  "recordList": [
-    {
-      "userInfo": {
-        "trackNumber": 0,
-        "musicPlayDate": "string",
-        "isClear": true,
-        "isAchievementNewRecord": true,
-        "isDxScoreNewRecord": true,
-        "comboStatusImg": "string",
-        "syncStatusImg": "string",
-        "userDxScore": 0,
-        "userBeforeRating": 0,
-        "userAfterRating": 0,
-        "userAchievementStr": "string",
-        "userAchievementRankImg": "string",
-        "userCombo": 0,
-        "maxCombo": 0,
-        "userSync": 0,
-        "maxSync": 0,
-        "dxStarImg": "string"
-      },
-      "musicInfo": {
-        "musicName": "string",
-        "musicLevel": 0,
-        "musicDiff": "string",
-        "musicDiffImg": "string",
-        "musicIcon": "string",
-        "isDxMusic": true,
-        "maxDxScore": 0
-      },
-      "detailInfo": {
-        "isEnabledCriticalPerfect": true,
-        "isEnabledFastAndLate": true,
-        "fast": 0,
-        "late": 0,
-        "tap": {
-          "criticalPerfect": 0,
-          "perfect": 0,
-          "great": 0,
-          "good": 0,
-          "miss": 0
-        },
-        "hold": {
-          "criticalPerfect": 0,
-          "perfect": 0,
-          "great": 0,
-          "good": 0,
-          "miss": 0
-        },
-        "slide": {
-          "criticalPerfect": 0,
-          "perfect": 0,
-          "great": 0,
-          "good": 0,
-          "miss": 0
-        },
-        "touch": {
-          "criticalPerfect": 0,
-          "perfect": 0,
-          "great": 0,
-          "good": 0,
-          "miss": 0
-        },
-        "mai2Break": {
-          "criticalPerfect": 0,
-          "perfect": 0,
-          "great": 0,
-          "good": 0,
-          "miss": 0
-        }
-      }
-    }
-  ]
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|show|boolean|true|none||none|
-|recordList|[[Mai2Record](#schemamai2record)]|true|none||none|
-
-<h2 id="tocS_NotesInfo">NotesInfo</h2>
-
-<a id="schemanotesinfo"></a>
-<a id="schema_NotesInfo"></a>
-<a id="tocSnotesinfo"></a>
-<a id="tocsnotesinfo"></a>
-
-```json
-{
-  "criticalPerfect": 0,
-  "perfect": 0,
-  "great": 0,
-  "good": 0,
-  "miss": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|criticalPerfect|integer(int32)|true|none||none|
-|perfect|integer(int32)|true|none||none|
-|great|integer(int32)|true|none||none|
-|good|integer(int32)|true|none||none|
-|miss|integer(int32)|true|none||none|
-
-<h2 id="tocS_MusicInfo">MusicInfo</h2>
-
-<a id="schemamusicinfo"></a>
-<a id="schema_MusicInfo"></a>
-<a id="tocSmusicinfo"></a>
-<a id="tocsmusicinfo"></a>
-
-```json
-{
-  "musicName": "string",
-  "musicLevel": 0,
-  "musicDiff": "string",
-  "musicDiffImg": "string",
-  "musicIcon": "string",
-  "isDxMusic": true,
-  "maxDxScore": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|musicName|string|true|none||none|
-|musicLevel|integer(int32)|true|none||none|
-|musicDiff|string|true|none||none|
-|musicDiffImg|string|true|none||none|
-|musicIcon|string|true|none||none|
-|isDxMusic|boolean|true|none||none|
-|maxDxScore|integer(int32)|true|none||none|
-
-<h2 id="tocS_Mai2Record">Mai2Record</h2>
-
-<a id="schemamai2record"></a>
-<a id="schema_Mai2Record"></a>
-<a id="tocSmai2record"></a>
-<a id="tocsmai2record"></a>
-
-```json
-{
-  "userInfo": {
-    "trackNumber": 0,
-    "musicPlayDate": "string",
-    "isClear": true,
-    "isAchievementNewRecord": true,
-    "isDxScoreNewRecord": true,
-    "comboStatusImg": "string",
-    "syncStatusImg": "string",
-    "userDxScore": 0,
-    "userBeforeRating": 0,
-    "userAfterRating": 0,
-    "userAchievementStr": "string",
-    "userAchievementRankImg": "string",
-    "userCombo": 0,
-    "maxCombo": 0,
-    "userSync": 0,
-    "maxSync": 0,
-    "dxStarImg": "string"
-  },
-  "musicInfo": {
-    "musicName": "string",
-    "musicLevel": 0,
-    "musicDiff": "string",
-    "musicDiffImg": "string",
-    "musicIcon": "string",
-    "isDxMusic": true,
-    "maxDxScore": 0
-  },
-  "detailInfo": {
-    "isEnabledCriticalPerfect": true,
-    "isEnabledFastAndLate": true,
-    "fast": 0,
-    "late": 0,
-    "tap": {
-      "criticalPerfect": 0,
-      "perfect": 0,
-      "great": 0,
-      "good": 0,
-      "miss": 0
-    },
-    "hold": {
-      "criticalPerfect": 0,
-      "perfect": 0,
-      "great": 0,
-      "good": 0,
-      "miss": 0
-    },
-    "slide": {
-      "criticalPerfect": 0,
-      "perfect": 0,
-      "great": 0,
-      "good": 0,
-      "miss": 0
-    },
-    "touch": {
-      "criticalPerfect": 0,
-      "perfect": 0,
-      "great": 0,
-      "good": 0,
-      "miss": 0
-    },
-    "mai2Break": {
-      "criticalPerfect": 0,
-      "perfect": 0,
-      "great": 0,
-      "good": 0,
-      "miss": 0
-    }
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|userInfo|[UserInfo](#schemauserinfo)|true|none||none|
-|musicInfo|[MusicInfo](#schemamusicinfo)|true|none||none|
-|detailInfo|[DetailInfo](#schemadetailinfo)|true|none||none|
-
-<h2 id="tocS_FinalResponseVORecordResponseVO">FinalResponseVORecordResponseVO</h2>
-
-<a id="schemafinalresponsevorecordresponsevo"></a>
-<a id="schema_FinalResponseVORecordResponseVO"></a>
-<a id="tocSfinalresponsevorecordresponsevo"></a>
-<a id="tocsfinalresponsevorecordresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "show": true,
-    "recordList": [
-      {
-        "userInfo": {
-          "trackNumber": 0,
-          "musicPlayDate": "string",
-          "isClear": true,
-          "isAchievementNewRecord": true,
-          "isDxScoreNewRecord": true,
-          "comboStatusImg": "string",
-          "syncStatusImg": "string",
-          "userDxScore": 0,
-          "userBeforeRating": 0,
-          "userAfterRating": 0,
-          "userAchievementStr": "string",
-          "userAchievementRankImg": "string",
-          "userCombo": 0,
-          "maxCombo": 0,
-          "userSync": 0,
-          "maxSync": 0,
-          "dxStarImg": "string"
-        },
-        "musicInfo": {
-          "musicName": "string",
-          "musicLevel": 0,
-          "musicDiff": "string",
-          "musicDiffImg": "string",
-          "musicIcon": "string",
-          "isDxMusic": true,
-          "maxDxScore": 0
-        },
-        "detailInfo": {
-          "isEnabledCriticalPerfect": true,
-          "isEnabledFastAndLate": true,
-          "fast": 0,
-          "late": 0,
-          "tap": {},
-          "hold": {},
-          "slide": {},
-          "touch": {},
-          "mai2Break": {}
-        }
-      }
-    ]
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[RecordResponseVO](#schemarecordresponsevo)|false|none||none|
-
-<h2 id="tocS_DetailInfo">DetailInfo</h2>
-
-<a id="schemadetailinfo"></a>
-<a id="schema_DetailInfo"></a>
-<a id="tocSdetailinfo"></a>
-<a id="tocsdetailinfo"></a>
-
-```json
-{
-  "isEnabledCriticalPerfect": true,
-  "isEnabledFastAndLate": true,
-  "fast": 0,
-  "late": 0,
-  "tap": {
-    "criticalPerfect": 0,
-    "perfect": 0,
-    "great": 0,
-    "good": 0,
-    "miss": 0
-  },
-  "hold": {
-    "criticalPerfect": 0,
-    "perfect": 0,
-    "great": 0,
-    "good": 0,
-    "miss": 0
-  },
-  "slide": {
-    "criticalPerfect": 0,
-    "perfect": 0,
-    "great": 0,
-    "good": 0,
-    "miss": 0
-  },
-  "touch": {
-    "criticalPerfect": 0,
-    "perfect": 0,
-    "great": 0,
-    "good": 0,
-    "miss": 0
-  },
-  "mai2Break": {
-    "criticalPerfect": 0,
-    "perfect": 0,
-    "great": 0,
-    "good": 0,
-    "miss": 0
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isEnabledCriticalPerfect|boolean|true|none||none|
-|isEnabledFastAndLate|boolean|true|none||none|
-|fast|integer(int32)|true|none||none|
-|late|integer(int32)|true|none||none|
-|tap|[NotesInfo](#schemanotesinfo)|true|none||none|
-|hold|[NotesInfo](#schemanotesinfo)|true|none||none|
-|slide|[NotesInfo](#schemanotesinfo)|true|none||none|
-|touch|[NotesInfo](#schemanotesinfo)|true|none||none|
-|mai2Break|[NotesInfo](#schemanotesinfo)|true|none||none|
-
-<h2 id="tocS_TurboTicketInfoVO">TurboTicketInfoVO</h2>
-
-<a id="schematurboticketinfovo"></a>
-<a id="schema_TurboTicketInfoVO"></a>
-<a id="tocSturboticketinfovo"></a>
-<a id="tocsturboticketinfovo"></a>
-
-```json
-{
-  "ticketId": 0,
-  "ticketName": "string",
-  "ticketImg": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|ticketId|integer(int32)|true|none||none|
-|ticketName|string|true|none||none|
-|ticketImg|string|true|none||none|
-
-<h2 id="tocS_TicketVO">TicketVO</h2>
-
-<a id="schematicketvo"></a>
-<a id="schema_TicketVO"></a>
-<a id="tocSticketvo"></a>
-<a id="tocsticketvo"></a>
-
-```json
-{
-  "ticketId": 0,
-  "ticketName": "string",
-  "ticketImg": "string",
-  "ticketCount": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|ticketId|integer(int32)|true|none||none|
-|ticketName|string|true|none||none|
-|ticketImg|string|true|none||none|
-|ticketCount|integer(int32)|true|none||none|
-
-<h2 id="tocS_TicketResponseVO">TicketResponseVO</h2>
-
-<a id="schematicketresponsevo"></a>
-<a id="schema_TicketResponseVO"></a>
-<a id="tocSticketresponsevo"></a>
-<a id="tocsticketresponsevo"></a>
-
-```json
-{
-  "ticketList": [
-    {
-      "ticketId": 0,
-      "ticketName": "string",
-      "ticketImg": "string",
-      "ticketCount": 0
-    }
-  ],
-  "turboTicketInfo": {
-    "ticketId": 0,
-    "ticketName": "string",
-    "ticketImg": "string"
-  },
-  "isEnableTurboTicket": true,
-  "isTicketEmpty": true
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|ticketList|[[TicketVO](#schematicketvo)]|true|none||none|
-|turboTicketInfo|[TurboTicketInfoVO](#schematurboticketinfovo)|false|none||none|
-|isEnableTurboTicket|boolean|true|none||none|
-|isTicketEmpty|boolean|true|none||none|
-
-<h2 id="tocS_FinalResponseVOTicketResponseVO">FinalResponseVOTicketResponseVO</h2>
-
-<a id="schemafinalresponsevoticketresponsevo"></a>
-<a id="schema_FinalResponseVOTicketResponseVO"></a>
-<a id="tocSfinalresponsevoticketresponsevo"></a>
-<a id="tocsfinalresponsevoticketresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "ticketList": [
-      {
-        "ticketId": 0,
-        "ticketName": "string",
-        "ticketImg": "string",
-        "ticketCount": 0
-      }
-    ],
-    "turboTicketInfo": {
-      "ticketId": 0,
-      "ticketName": "string",
-      "ticketImg": "string"
-    },
-    "isEnableTurboTicket": true,
-    "isTicketEmpty": true
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[TicketResponseVO](#schematicketresponsevo)|false|none||none|
-
-<h2 id="tocS_TurboVO">TurboVO</h2>
-
-<a id="schematurbovo"></a>
-<a id="schema_TurboVO"></a>
-<a id="tocSturbovo"></a>
-<a id="tocsturbovo"></a>
-
-```json
-{
-  "name": "string",
-  "allRequestsNumber": 0,
-  "cacheRequestsNumber": 0,
-  "fixedRequestNumber": 0,
-  "cacheHitRate": "string",
-  "detail": {
-    "isEmptyDetail": true,
-    "tenMinutesDetail": {
-      "playerCount": 0,
-      "playCount": 0
-    },
-    "thirtyMinutesDetail": {
-      "playerCount": 0,
-      "playCount": 0
-    },
-    "hourDetail": {
-      "playerCount": 0,
-      "playCount": 0
-    },
-    "playerDetail": [
-      {
-        "playerLoginDate": "string",
-        "playerName": "string",
-        "playerRating": 0
-      }
-    ]
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|name|string|true|none||none|
-|allRequestsNumber|integer(int32)|true|none||none|
-|cacheRequestsNumber|integer(int32)|true|none||none|
-|fixedRequestNumber|integer(int32)|true|none||none|
-|cacheHitRate|string|true|none||none|
-|detail|[TurboDetailResponseVO](#schematurbodetailresponsevo)|true|none||none|
-
-<h2 id="tocS_TurboSingleDetailPlayerVO">TurboSingleDetailPlayerVO</h2>
-
-<a id="schematurbosingledetailplayervo"></a>
-<a id="schema_TurboSingleDetailPlayerVO"></a>
-<a id="tocSturbosingledetailplayervo"></a>
-<a id="tocsturbosingledetailplayervo"></a>
-
-```json
-{
-  "playerLoginDate": "string",
-  "playerName": "string",
-  "playerRating": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|playerLoginDate|string|true|none||none|
-|playerName|string|true|none||none|
-|playerRating|integer(int32)|true|none||none|
-
-<h2 id="tocS_TurboResponseVO">TurboResponseVO</h2>
-
-<a id="schematurboresponsevo"></a>
-<a id="schema_TurboResponseVO"></a>
-<a id="tocSturboresponsevo"></a>
-<a id="tocsturboresponsevo"></a>
-
-```json
-{
-  "show": true,
-  "turboInfoList": [
-    {
-      "name": "string",
-      "allRequestsNumber": 0,
-      "cacheRequestsNumber": 0,
-      "fixedRequestNumber": 0,
-      "cacheHitRate": "string",
-      "detail": {
-        "isEmptyDetail": true,
-        "tenMinutesDetail": {
-          "playerCount": 0,
-          "playCount": 0
-        },
-        "thirtyMinutesDetail": {
-          "playerCount": 0,
-          "playCount": 0
-        },
-        "hourDetail": {
-          "playerCount": 0,
-          "playCount": 0
-        },
-        "playerDetail": [
-          {
-            "playerLoginDate": null,
-            "playerName": null,
-            "playerRating": null
-          }
-        ]
-      }
-    }
-  ]
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|show|boolean|true|none||none|
-|turboInfoList|[[TurboVO](#schematurbovo)]|true|none||none|
-
-<h2 id="tocS_TurboPlayDetailVO">TurboPlayDetailVO</h2>
-
-<a id="schematurboplaydetailvo"></a>
-<a id="schema_TurboPlayDetailVO"></a>
-<a id="tocSturboplaydetailvo"></a>
-<a id="tocsturboplaydetailvo"></a>
-
-```json
-{
-  "playerCount": 0,
-  "playCount": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|playerCount|integer(int32)|true|none||none|
-|playCount|integer(int32)|true|none||none|
-
-<h2 id="tocS_TurboDetailResponseVO">TurboDetailResponseVO</h2>
-
-<a id="schematurbodetailresponsevo"></a>
-<a id="schema_TurboDetailResponseVO"></a>
-<a id="tocSturbodetailresponsevo"></a>
-<a id="tocsturbodetailresponsevo"></a>
-
-```json
-{
-  "isEmptyDetail": true,
-  "tenMinutesDetail": {
-    "playerCount": 0,
-    "playCount": 0
-  },
-  "thirtyMinutesDetail": {
-    "playerCount": 0,
-    "playCount": 0
-  },
-  "hourDetail": {
-    "playerCount": 0,
-    "playCount": 0
-  },
-  "playerDetail": [
-    {
-      "playerLoginDate": "string",
-      "playerName": "string",
-      "playerRating": 0
-    }
-  ]
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isEmptyDetail|boolean|true|none||none|
-|tenMinutesDetail|[TurboPlayDetailVO](#schematurboplaydetailvo)|true|none||none|
-|thirtyMinutesDetail|[TurboPlayDetailVO](#schematurboplaydetailvo)|true|none||none|
-|hourDetail|[TurboPlayDetailVO](#schematurboplaydetailvo)|true|none||none|
-|playerDetail|[[TurboSingleDetailPlayerVO](#schematurbosingledetailplayervo)]|true|none||none|
-
-<h2 id="tocS_FinalResponseVOTurboResponseVO">FinalResponseVOTurboResponseVO</h2>
-
-<a id="schemafinalresponsevoturboresponsevo"></a>
-<a id="schema_FinalResponseVOTurboResponseVO"></a>
-<a id="tocSfinalresponsevoturboresponsevo"></a>
-<a id="tocsfinalresponsevoturboresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "show": true,
-    "turboInfoList": [
-      {
-        "name": "string",
-        "allRequestsNumber": 0,
-        "cacheRequestsNumber": 0,
-        "fixedRequestNumber": 0,
-        "cacheHitRate": "string",
-        "detail": {
-          "isEmptyDetail": true,
-          "tenMinutesDetail": {},
-          "thirtyMinutesDetail": {},
-          "hourDetail": {},
-          "playerDetail": [
-            null
-          ]
-        }
-      }
-    ]
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[TurboResponseVO](#schematurboresponsevo)|false|none||none|
-
-<h2 id="tocS_UserResponseVO">UserResponseVO</h2>
-
-<a id="schemauserresponsevo"></a>
-<a id="schema_UserResponseVO"></a>
-<a id="tocSuserresponsevo"></a>
-<a id="tocsuserresponsevo"></a>
-
-```json
-{
-  "username": "string",
-  "permissionLevel": "string",
-  "email": "string",
-  "qqNumber": "string",
-  "mai2Name": "string",
-  "mai2SHA256": "string",
-  "botToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|username|string|true|none||none|
-|permissionLevel|string|true|none||none|
-|email|string|true|none||none|
-|qqNumber|string|true|none||none|
-|mai2Name|string|true|none||none|
-|mai2SHA256|string|true|none||none|
-|botToken|string|true|none||none|
-
-<h2 id="tocS_FinalResponseVOUserResponseVO">FinalResponseVOUserResponseVO</h2>
-
-<a id="schemafinalresponsevouserresponsevo"></a>
-<a id="schema_FinalResponseVOUserResponseVO"></a>
-<a id="tocSfinalresponsevouserresponsevo"></a>
-<a id="tocsfinalresponsevouserresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "username": "string",
-    "permissionLevel": "string",
-    "email": "string",
-    "qqNumber": "string",
-    "mai2Name": "string",
-    "mai2SHA256": "string",
-    "botToken": "string"
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[UserResponseVO](#schemauserresponsevo)|false|none||none|
-
-<h2 id="tocS_RegisterSecondStepsValidRequestVO">RegisterSecondStepsValidRequestVO</h2>
-
-<a id="schemaregistersecondstepsvalidrequestvo"></a>
-<a id="schema_RegisterSecondStepsValidRequestVO"></a>
-<a id="tocSregistersecondstepsvalidrequestvo"></a>
-<a id="tocsregistersecondstepsvalidrequestvo"></a>
-
-```json
-{
-  "email": "string",
-  "qqNumber": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|email|string|true|none||none|
-|qqNumber|string|true|none||none|
-
-<h2 id="tocS_RegisterUsernameValidRequestVO">RegisterUsernameValidRequestVO</h2>
-
-<a id="schemaregisterusernamevalidrequestvo"></a>
-<a id="schema_RegisterUsernameValidRequestVO"></a>
-<a id="tocSregisterusernamevalidrequestvo"></a>
-<a id="tocsregisterusernamevalidrequestvo"></a>
-
-```json
-{
-  "username": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|username|string|true|none||none|
-
-<h2 id="tocS_LoginResponseVO">LoginResponseVO</h2>
-
-<a id="schemaloginresponsevo"></a>
-<a id="schema_LoginResponseVO"></a>
-<a id="tocSloginresponsevo"></a>
-<a id="tocsloginresponsevo"></a>
-
-```json
-{
-  "token": "string",
-  "refreshToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|token|string|true|none||none|
-|refreshToken|string|true|none||none|
-
-<h2 id="tocS_FinalResponseVOLoginResponseVO">FinalResponseVOLoginResponseVO</h2>
-
-<a id="schemafinalresponsevologinresponsevo"></a>
-<a id="schema_FinalResponseVOLoginResponseVO"></a>
-<a id="tocSfinalresponsevologinresponsevo"></a>
-<a id="tocsfinalresponsevologinresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "token": "string",
-    "refreshToken": "string"
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[LoginResponseVO](#schemaloginresponsevo)|false|none||none|
-
-<h2 id="tocS_LoginRequestVO">LoginRequestVO</h2>
-
-<a id="schemaloginrequestvo"></a>
-<a id="schema_LoginRequestVO"></a>
-<a id="tocSloginrequestvo"></a>
-<a id="tocsloginrequestvo"></a>
-
-```json
-{
-  "username": "string",
-  "password": "string",
-  "captchaToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|username|string|true|none||none|
-|password|string|true|none||none|
-|captchaToken|string|true|none||none|
-
-<h2 id="tocS_LogoutRequestVO">LogoutRequestVO</h2>
-
-<a id="schemalogoutrequestvo"></a>
-<a id="schema_LogoutRequestVO"></a>
-<a id="tocSlogoutrequestvo"></a>
-<a id="tocslogoutrequestvo"></a>
-
-```json
-{
-  "token": "string",
-  "refreshToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|token|string|true|none||none|
-|refreshToken|string|true|none||none|
-
-<h2 id="tocS_RefreshTokenRequestVO">RefreshTokenRequestVO</h2>
-
-<a id="schemarefreshtokenrequestvo"></a>
-<a id="schema_RefreshTokenRequestVO"></a>
-<a id="tocSrefreshtokenrequestvo"></a>
-<a id="tocsrefreshtokenrequestvo"></a>
-
-```json
-{
-  "refreshToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|refreshToken|string|true|none||none|
-
-<h2 id="tocS_RegisterVerifyRequestVO">RegisterVerifyRequestVO</h2>
-
-<a id="schemaregisterverifyrequestvo"></a>
-<a id="schema_RegisterVerifyRequestVO"></a>
-<a id="tocSregisterverifyrequestvo"></a>
-<a id="tocsregisterverifyrequestvo"></a>
-
-```json
-{
-  "token": "string",
-  "valid": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|token|string|true|none||none|
-|valid|string|true|none||none|
-
-<h2 id="tocS_RegisterResponseVO">RegisterResponseVO</h2>
-
-<a id="schemaregisterresponsevo"></a>
-<a id="schema_RegisterResponseVO"></a>
-<a id="tocSregisterresponsevo"></a>
-<a id="tocsregisterresponsevo"></a>
-
-```json
-{
-  "msg": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|msg|string|true|none||none|
-
-<h2 id="tocS_FinalResponseVORegisterResponseVO">FinalResponseVORegisterResponseVO</h2>
-
-<a id="schemafinalresponsevoregisterresponsevo"></a>
-<a id="schema_FinalResponseVORegisterResponseVO"></a>
-<a id="tocSfinalresponsevoregisterresponsevo"></a>
-<a id="tocsfinalresponsevoregisterresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "msg": "string"
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[RegisterResponseVO](#schemaregisterresponsevo)|false|none||none|
-
-<h2 id="tocS_RegisterRequestVO">RegisterRequestVO</h2>
-
-<a id="schemaregisterrequestvo"></a>
-<a id="schema_RegisterRequestVO"></a>
-<a id="tocSregisterrequestvo"></a>
-<a id="tocsregisterrequestvo"></a>
-
-```json
-{
-  "username": "string",
-  "password": "string",
-  "email": "string",
-  "qqNumber": "string",
-  "weChatID": "string",
-  "captchaToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|username|string|true|none||none|
-|password|string|true|none||none|
-|email|string|true|none||none|
-|qqNumber|string|true|none||none|
-|weChatID|string|true|none||none|
-|captchaToken|string|true|none||none|
-
-<h2 id="tocS_ResetPasswordIsValidRequestVO">ResetPasswordIsValidRequestVO</h2>
-
-<a id="schemaresetpasswordisvalidrequestvo"></a>
-<a id="schema_ResetPasswordIsValidRequestVO"></a>
-<a id="tocSresetpasswordisvalidrequestvo"></a>
-<a id="tocsresetpasswordisvalidrequestvo"></a>
-
-```json
-{
-  "token": "string",
-  "valid": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|token|string|true|none||none|
-|valid|string|true|none||none|
-
-<h2 id="tocS_ResetPasswordValidRequestVO">ResetPasswordValidRequestVO</h2>
-
-<a id="schemaresetpasswordvalidrequestvo"></a>
-<a id="schema_ResetPasswordValidRequestVO"></a>
-<a id="tocSresetpasswordvalidrequestvo"></a>
-<a id="tocsresetpasswordvalidrequestvo"></a>
-
-```json
-{
-  "token": "string",
-  "valid": "string",
-  "password": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|token|string|true|none||none|
-|valid|string|true|none||none|
-|password|string|true|none||none|
-
-<h2 id="tocS_Null">Null</h2>
-
-<a id="schemanull"></a>
-<a id="schema_Null"></a>
-<a id="tocSnull"></a>
-<a id="tocsnull"></a>
-
-```json
-{}
-
-```
-
-### 属性
-
-*None*
-
-<h2 id="tocS_FinalResponseVONull">FinalResponseVONull</h2>
-
-<a id="schemafinalresponsevonull"></a>
-<a id="schema_FinalResponseVONull"></a>
-<a id="tocSfinalresponsevonull"></a>
-<a id="tocsfinalresponsevonull"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {}
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[Null](#schemanull)|false|none||none|
-
-<h2 id="tocS_ResetPasswordRequestVO">ResetPasswordRequestVO</h2>
-
-<a id="schemaresetpasswordrequestvo"></a>
-<a id="schema_ResetPasswordRequestVO"></a>
-<a id="tocSresetpasswordrequestvo"></a>
-<a id="tocsresetpasswordrequestvo"></a>
-
-```json
-{
-  "email": "string",
-  "captchaToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|email|string|true|none||none|
-|captchaToken|string|true|none||none|
-
-<h2 id="tocS_RefreshTokenResponseVO">RefreshTokenResponseVO</h2>
-
-<a id="schemarefreshtokenresponsevo"></a>
-<a id="schema_RefreshTokenResponseVO"></a>
-<a id="tocSrefreshtokenresponsevo"></a>
-<a id="tocsrefreshtokenresponsevo"></a>
-
-```json
-{
-  "token": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|token|string|true|none||none|
-
-<h2 id="tocS_FinalResponseVORefreshTokenResponseVO">FinalResponseVORefreshTokenResponseVO</h2>
-
-<a id="schemafinalresponsevorefreshtokenresponsevo"></a>
-<a id="schema_FinalResponseVORefreshTokenResponseVO"></a>
-<a id="tocSfinalresponsevorefreshtokenresponsevo"></a>
-<a id="tocsfinalresponsevorefreshtokenresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "token": "string"
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[RefreshTokenResponseVO](#schemarefreshtokenresponsevo)|false|none||none|
-
-<h2 id="tocS_TokenValidationRequestVO">TokenValidationRequestVO</h2>
-
-<a id="schematokenvalidationrequestvo"></a>
-<a id="schema_TokenValidationRequestVO"></a>
-<a id="tocStokenvalidationrequestvo"></a>
-<a id="tocstokenvalidationrequestvo"></a>
-
-```json
-{
-  "token": "string",
-  "refreshToken": "string",
-  "botToken": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|token|string|false|none||none|
-|refreshToken|string|false|none||none|
-|botToken|string|false|none||none|
-
-<h2 id="tocS_FinalResponseVOBotBindResponseVO">FinalResponseVOBotBindResponseVO</h2>
-
-<a id="schemafinalresponsevobotbindresponsevo"></a>
-<a id="schema_FinalResponseVOBotBindResponseVO"></a>
-<a id="tocSfinalresponsevobotbindresponsevo"></a>
-<a id="tocsfinalresponsevobotbindresponsevo"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": {
-    "botKey": "string"
-  }
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|[BotBindResponseVO](#schemabotbindresponsevo)|false|none||none|
-
-<h2 id="tocS_BotBindResponseVO">BotBindResponseVO</h2>
-
-<a id="schemabotbindresponsevo"></a>
-<a id="schema_BotBindResponseVO"></a>
-<a id="tocSbotbindresponsevo"></a>
-<a id="tocsbotbindresponsevo"></a>
-
-```json
-{
-  "botKey": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|botKey|string|true|none||none|
-
-<h2 id="tocS_BotBindRequestVO">BotBindRequestVO</h2>
-
-<a id="schemabotbindrequestvo"></a>
-<a id="schema_BotBindRequestVO"></a>
-<a id="tocSbotbindrequestvo"></a>
-<a id="tocsbotbindrequestvo"></a>
-
-```json
-{
-  "botToken": "string",
-  "botName": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|botToken|string|true|none||none|
-|botName|string|true|none||none|
-
-<h2 id="tocS_BotUnbindRequestVO">BotUnbindRequestVO</h2>
-
-<a id="schemabotunbindrequestvo"></a>
-<a id="schema_BotUnbindRequestVO"></a>
-<a id="tocSbotunbindrequestvo"></a>
-<a id="tocsbotunbindrequestvo"></a>
-
-```json
-{
-  "botKey": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|botKey|string|true|none||none|
-
-<h2 id="tocS_FinalResponseVOString">FinalResponseVOString</h2>
-
-<a id="schemafinalresponsevostring"></a>
-<a id="schema_FinalResponseVOString"></a>
-<a id="tocSfinalresponsevostring"></a>
-<a id="tocsfinalresponsevostring"></a>
-
-```json
-{
-  "isSuccess": true,
-  "data": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|isSuccess|boolean|true|none||none|
-|data|string|false|none||none|
-
-<h2 id="tocS_PermissionRequestVO">PermissionRequestVO</h2>
-
-<a id="schemapermissionrequestvo"></a>
-<a id="schema_PermissionRequestVO"></a>
-<a id="tocSpermissionrequestvo"></a>
-<a id="tocspermissionrequestvo"></a>
-
-```json
-{
-  "changeUsername": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|changeUsername|string|true|none||none|
-
-<h2 id="tocS_PhotoFavoriteRequestVO">PhotoFavoriteRequestVO</h2>
-
-<a id="schemaphotofavoriterequestvo"></a>
-<a id="schema_PhotoFavoriteRequestVO"></a>
-<a id="tocSphotofavoriterequestvo"></a>
-<a id="tocsphotofavoriterequestvo"></a>
-
-```json
-{
-  "photoUUID": "string"
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|photoUUID|string|true|none||none|
-
-<h2 id="tocS_TurboTicketWhitelistRequestVO">TurboTicketWhitelistRequestVO</h2>
-
-<a id="schematurboticketwhitelistrequestvo"></a>
-<a id="schema_TurboTicketWhitelistRequestVO"></a>
-<a id="tocSturboticketwhitelistrequestvo"></a>
-<a id="tocsturboticketwhitelistrequestvo"></a>
-
-```json
-{
-  "ticketId": 0
-}
-
-```
-
-### 属性
-
-|名称|类型|必选|约束|中文名|说明|
-|---|---|---|---|---|---|
-|ticketId|integer(int32)|true|none||none|
-
-<h2 id="tocS_TurboCustomNameRequestVO">TurboCustomNameRequestVO</h2>
-
-<a id="schematurbocustomnamerequestvo"></a>
-<a id="schema_TurboCustomNameRequestVO"></a>
-<a id="tocSturbocustomnamerequestvo"></a>
-<a id="tocsturbocustomnamerequestvo"></a>
+<h2 id="tocS_UserRequestVO">UserRequestVO</h2>
+
+<a id="schemauserrequestvo"></a>
+<a id="schema_UserRequestVO"></a>
+<a id="tocSuserrequestvo"></a>
+<a id="tocsuserrequestvo"></a>
 
 ```json
 {
@@ -4776,32 +2327,255 @@ POST /auth/isSecondStepsValid
 |---|---|---|---|---|---|
 |turboName|string|true|none||none|
 
-<h2 id="tocS_Unit">Unit</h2>
+<h2 id="tocS_Global exception">Global exception</h2>
 
-<a id="schemaunit"></a>
-<a id="schema_Unit"></a>
-<a id="tocSunit"></a>
-<a id="tocsunit"></a>
-
-```json
-{}
-
-```
-
-### 属性
-
-*None*
-
-<h2 id="tocS_UpsertUserPortraitRequestVO">UpsertUserPortraitRequestVO</h2>
-
-<a id="schemaupsertuserportraitrequestvo"></a>
-<a id="schema_UpsertUserPortraitRequestVO"></a>
-<a id="tocSupsertuserportraitrequestvo"></a>
-<a id="tocsupsertuserportraitrequestvo"></a>
+<a id="schemaglobal exception"></a>
+<a id="schema_Global exception"></a>
+<a id="tocSglobal exception"></a>
+<a id="tocsglobal exception"></a>
 
 ```json
 {
-  "divData": "string"
+  "code": 0,
+  "message": "string"
+}
+
+```
+
+全局返回
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|code|integer(int32)|true|none||返回码|
+|message|string|true|none||提示信息|
+
+<h2 id="tocS_AchievementCount">AchievementCount</h2>
+
+<a id="schemaachievementcount"></a>
+<a id="schema_AchievementCount"></a>
+<a id="tocSachievementcount"></a>
+<a id="tocsachievementcount"></a>
+
+```json
+{
+  "sssPlus": 0,
+  "sss": 0,
+  "ssPlus": 0,
+  "ss": 0,
+  "sPlus": 0,
+  "s": 0,
+  "splus": 0
+}
+
+```
+
+总成绩
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|sssPlus|integer(int32)|true|none||none|
+|sss|integer(int32)|true|none||none|
+|ssPlus|integer(int32)|true|none||none|
+|ss|integer(int32)|true|none||none|
+|sPlus|integer(int32)|false|write-only||none|
+|s|integer(int32)|true|none||none|
+|splus|integer(int32)|true|none||none|
+
+<h2 id="tocS_MaiStatistics">MaiStatistics</h2>
+
+<a id="schemamaistatistics"></a>
+<a id="schema_MaiStatistics"></a>
+<a id="tocSmaistatistics"></a>
+<a id="tocsmaistatistics"></a>
+
+```json
+{
+  "echartsLine": "string",
+  "deluxRating": 0,
+  "serverRanking": 0,
+  "averageAccuracy": 0.1,
+  "maxCombo": 0,
+  "fullCombo": 0,
+  "allPerfect": 0,
+  "totalScores": 0,
+  "achievementCount": {
+    "sssPlus": 0,
+    "sss": 0,
+    "ssPlus": 0,
+    "ss": 0,
+    "sPlus": 0,
+    "s": 0,
+    "splus": 0
+  }
+}
+
+```
+
+maimai状态
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|echartsLine|string|true|none||数据可视化|
+|deluxRating|integer(int32)|true|none||DX分数|
+|serverRanking|integer(int32)|true|none||服务器排名|
+|averageAccuracy|number(double)|true|none||平均达成率|
+|maxCombo|integer(int32)|true|none||最大连击数|
+|fullCombo|integer(int32)|true|none||fullCombo|
+|allPerfect|integer(int32)|true|none||allPerfect|
+|totalScores|integer(int64)|true|none||总分数|
+|achievementCount|[AchievementCount](#schemaachievementcount)|true|none||总成绩|
+
+<h2 id="tocS_MusicInfo">MusicInfo</h2>
+
+<a id="schemamusicinfo"></a>
+<a id="schema_MusicInfo"></a>
+<a id="tocSmusicinfo"></a>
+<a id="tocsmusicinfo"></a>
+
+```json
+{
+  "musicId": 0,
+  "level": 0.1,
+  "diff": 0,
+  "musicName": "string",
+  "scoreRank": "string",
+  "achievement": 0.1,
+  "score": 0
+}
+
+```
+
+当前分数
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|musicId|integer(int32)|true|none||none|
+|level|number(double)|true|none||none|
+|diff|integer(int32)|true|none||none|
+|musicName|string|true|none||none|
+|scoreRank|string|true|none||none|
+|achievement|number(double)|true|none||none|
+|score|integer(int32)|true|none||none|
+
+<h2 id="tocS_PlayActivity">PlayActivity</h2>
+
+<a id="schemaplayactivity"></a>
+<a id="schema_PlayActivity"></a>
+<a id="tocSplayactivity"></a>
+<a id="tocsplayactivity"></a>
+
+```json
+{
+  "heatmapPoints": "string",
+  "playCount": 0,
+  "playTime": 0.1,
+  "firstPlay": "string",
+  "lastPlay": "string",
+  "playVersion": "string"
+}
+
+```
+
+游玩时间
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|heatmapPoints|string|true|none||none|
+|playCount|integer(int32)|true|none||none|
+|playTime|number(double)|true|none||none|
+|firstPlay|string|true|none||none|
+|lastPlay|string|true|none||none|
+|playVersion|string|true|none||none|
+
+<h2 id="tocS_UserResponseVO">UserResponseVO</h2>
+
+<a id="schemauserresponsevo"></a>
+<a id="schema_UserResponseVO"></a>
+<a id="tocSuserresponsevo"></a>
+<a id="tocsuserresponsevo"></a>
+
+```json
+{
+  "isMe": true,
+  "maimaiName": "string",
+  "turboName": "string",
+  "qqNumber": "string",
+  "avatar": "string",
+  "permission": "string",
+  "warningTimes": 0,
+  "warningMessage": "string",
+  "isBanned": true,
+  "bannedMessage": "string",
+  "maiStatistics": {
+    "echartsLine": "string",
+    "deluxRating": 0,
+    "serverRanking": 0,
+    "averageAccuracy": 0.1,
+    "maxCombo": 0,
+    "fullCombo": 0,
+    "allPerfect": 0,
+    "totalScores": 0,
+    "achievementCount": {
+      "sssPlus": 0,
+      "sss": 0,
+      "ssPlus": 0,
+      "ss": 0,
+      "sPlus": 0,
+      "s": 0,
+      "splus": 0
+    }
+  },
+  "playActivity": {
+    "heatmapPoints": "string",
+    "playCount": 0,
+    "playTime": 0.1,
+    "firstPlay": "string",
+    "lastPlay": "string",
+    "playVersion": "string"
+  },
+  "best35": [
+    {
+      "musicId": 0,
+      "level": 0.1,
+      "diff": 0,
+      "musicName": "string",
+      "scoreRank": "string",
+      "achievement": 0.1,
+      "score": 0
+    }
+  ],
+  "best15": [
+    {
+      "musicId": 0,
+      "level": 0.1,
+      "diff": 0,
+      "musicName": "string",
+      "scoreRank": "string",
+      "achievement": 0.1,
+      "score": 0
+    }
+  ],
+  "recentScores": [
+    {
+      "musicId": 0,
+      "level": 0.1,
+      "diff": 0,
+      "musicName": "string",
+      "scoreRank": "string",
+      "achievement": 0.1,
+      "score": 0
+    }
+  ]
 }
 
 ```
@@ -4810,5 +2584,1510 @@ POST /auth/isSecondStepsValid
 
 |名称|类型|必选|约束|中文名|说明|
 |---|---|---|---|---|---|
-|divData|string|true|none||none|
+|isMe|boolean|true|none||是我？|
+|maimaiName|string|true|none||maimai名称|
+|turboName|string|true|none||turbo名称|
+|qqNumber|string|true|none||QQ号|
+|avatar|string|true|none||头像|
+|permission|string|true|none||权限|
+|warningTimes|integer(int32)|true|none||警告时间|
+|warningMessage|string|true|none||警告信息|
+|isBanned|boolean|true|none||是否封禁|
+|bannedMessage|string|true|none||封禁理由|
+|maiStatistics|[MaiStatistics](#schemamaistatistics)|true|none||maimai状态|
+|playActivity|[PlayActivity](#schemaplayactivity)|true|none||游玩时间|
+|best35|[[MusicInfo](#schemamusicinfo)]|true|none||b35|
+|best15|[[MusicInfo](#schemamusicinfo)]|true|none||b15|
+|recentScores|[[MusicInfo](#schemamusicinfo)]|true|none||当前分数|
+
+<h2 id="tocS_SetUserSettingsRequestVO">SetUserSettingsRequestVO</h2>
+
+<a id="schemasetusersettingsrequestvo"></a>
+<a id="schema_SetUserSettingsRequestVO"></a>
+<a id="tocSsetusersettingsrequestvo"></a>
+<a id="tocssetusersettingsrequestvo"></a>
+
+```json
+{
+  "policyName": "string",
+  "policy": "EVERYONE"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|policyName|string|true|none||none|
+|policy|string|true|none||none|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|policy|EVERYONE|
+|policy|ONLY_FRIENDS|
+|policy|ONLY_ME|
+
+<h2 id="tocS_SetTicketsRequestVO">SetTicketsRequestVO</h2>
+
+<a id="schemasetticketsrequestvo"></a>
+<a id="schema_SetTicketsRequestVO"></a>
+<a id="tocSsetticketsrequestvo"></a>
+<a id="tocssetticketsrequestvo"></a>
+
+```json
+{
+  "ticketId": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|ticketId|integer(int32)|true|none||none|
+
+<h2 id="tocS_SetMaimaiNameRequestVO">SetMaimaiNameRequestVO</h2>
+
+<a id="schemasetmaimainamerequestvo"></a>
+<a id="schema_SetMaimaiNameRequestVO"></a>
+<a id="tocSsetmaimainamerequestvo"></a>
+<a id="tocssetmaimainamerequestvo"></a>
+
+```json
+{
+  "maimaiName": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|maimaiName|string|true|none||none|
+
+<h2 id="tocS_FriendSearchPolicyRequestVO">FriendSearchPolicyRequestVO</h2>
+
+<a id="schemafriendsearchpolicyrequestvo"></a>
+<a id="schema_FriendSearchPolicyRequestVO"></a>
+<a id="tocSfriendsearchpolicyrequestvo"></a>
+<a id="tocsfriendsearchpolicyrequestvo"></a>
+
+```json
+{
+  "policy": "AUTO_ACCEPT"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|policy|string|true|none||none|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|policy|AUTO_ACCEPT|
+|policy|MANUAL|
+|policy|FRIENDS_OF_FRIENDS|
+|policy|NOBODY|
+
+<h2 id="tocS_SetAvatarRequestVO">SetAvatarRequestVO</h2>
+
+<a id="schemasetavatarrequestvo"></a>
+<a id="schema_SetAvatarRequestVO"></a>
+<a id="tocSsetavatarrequestvo"></a>
+<a id="tocssetavatarrequestvo"></a>
+
+```json
+{
+  "avatarBase64": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|avatarBase64|string|true|none||none|
+
+<h2 id="tocS_FriendRequestVO">FriendRequestVO</h2>
+
+<a id="schemafriendrequestvo"></a>
+<a id="schema_FriendRequestVO"></a>
+<a id="tocSfriendrequestvo"></a>
+<a id="tocsfriendrequestvo"></a>
+
+```json
+{
+  "turboName": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|turboName|string|true|none||turbo名称|
+
+<h2 id="tocS_FavoriteRequestVO">FavoriteRequestVO</h2>
+
+<a id="schemafavoriterequestvo"></a>
+<a id="schema_FavoriteRequestVO"></a>
+<a id="tocSfavoriterequestvo"></a>
+<a id="tocsfavoriterequestvo"></a>
+
+```json
+{
+  "photoId": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|photoId|string|true|none||none|
+
+<h2 id="tocS_ArcadeAliasRequestVO">ArcadeAliasRequestVO</h2>
+
+<a id="schemaarcadealiasrequestvo"></a>
+<a id="schema_ArcadeAliasRequestVO"></a>
+<a id="tocSarcadealiasrequestvo"></a>
+<a id="tocsarcadealiasrequestvo"></a>
+
+```json
+{
+  "arcadeName": "string",
+  "arcadeAlias": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|arcadeName|string|true|none||none|
+|arcadeAlias|string|true|none||none|
+
+<h2 id="tocS_UnbindRequestVO">UnbindRequestVO</h2>
+
+<a id="schemaunbindrequestvo"></a>
+<a id="schema_UnbindRequestVO"></a>
+<a id="tocSunbindrequestvo"></a>
+<a id="tocsunbindrequestvo"></a>
+
+```json
+{
+  "token": "string",
+  "botId": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|token|string|true|none||none|
+|botId|string|true|none||none|
+
+<h2 id="tocS_Bot bind">Bot bind</h2>
+
+<a id="schemabot bind"></a>
+<a id="schema_Bot bind"></a>
+<a id="tocSbot bind"></a>
+<a id="tocsbot bind"></a>
+
+```json
+{
+  "botName": "string",
+  "botToken": "string"
+}
+
+```
+
+bot绑定
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|botName|string|true|none||bot名称|
+|botToken|string|true|none||Bot Token|
+
+<h2 id="tocS_bind response">bind response</h2>
+
+<a id="schemabind response"></a>
+<a id="schema_bind response"></a>
+<a id="tocSbind response"></a>
+<a id="tocsbind response"></a>
+
+```json
+{
+  "botId": "string",
+  "botKey": "string"
+}
+
+```
+
+bot绑定返回
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|botId|string|true|none||Bot 名称|
+|botKey|string|true|none||Bot 绑定密钥|
+
+<h2 id="tocS_UpgradeTurboPermissionResponseVO">UpgradeTurboPermissionResponseVO</h2>
+
+<a id="schemaupgradeturbopermissionresponsevo"></a>
+<a id="schema_UpgradeTurboPermissionResponseVO"></a>
+<a id="tocSupgradeturbopermissionresponsevo"></a>
+<a id="tocsupgradeturbopermissionresponsevo"></a>
+
+```json
+{
+  "turboName": "string",
+  "permission": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|turboName|string|true|none||turbo名称|
+|permission|string|true|none||权限|
+
+<h2 id="tocS_TurboPermissionResponseVO">TurboPermissionResponseVO</h2>
+
+<a id="schematurbopermissionresponsevo"></a>
+<a id="schema_TurboPermissionResponseVO"></a>
+<a id="tocSturbopermissionresponsevo"></a>
+<a id="tocsturbopermissionresponsevo"></a>
+
+```json
+{
+  "turboName": "string",
+  "avatar": "string",
+  "permission": "string",
+  "warningTimes": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|turboName|string|true|none||turbo名称|
+|avatar|string|true|none||头像|
+|permission|string|true|none||权限|
+|warningTimes|integer(int32)|true|none||警告时间|
+
+<h2 id="tocS_ShowUserSettingsResponseVO">ShowUserSettingsResponseVO</h2>
+
+<a id="schemashowusersettingsresponsevo"></a>
+<a id="schema_ShowUserSettingsResponseVO"></a>
+<a id="tocSshowusersettingsresponsevo"></a>
+<a id="tocsshowusersettingsresponsevo"></a>
+
+```json
+{
+  "userPageAccessible": "EVERYONE",
+  "best35Accessible": "EVERYONE",
+  "best15Accessible": "EVERYONE",
+  "recentScoresAccessible": "EVERYONE"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|userPageAccessible|string|true|none||用户界面可见|
+|best35Accessible|string|true|none||b35可见|
+|best15Accessible|string|true|none||b15可见|
+|recentScoresAccessible|string|true|none||最新成绩可见|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|userPageAccessible|EVERYONE|
+|userPageAccessible|ONLY_FRIENDS|
+|userPageAccessible|ONLY_ME|
+|best35Accessible|EVERYONE|
+|best35Accessible|ONLY_FRIENDS|
+|best35Accessible|ONLY_ME|
+|best15Accessible|EVERYONE|
+|best15Accessible|ONLY_FRIENDS|
+|best15Accessible|ONLY_ME|
+|recentScoresAccessible|EVERYONE|
+|recentScoresAccessible|ONLY_FRIENDS|
+|recentScoresAccessible|ONLY_ME|
+
+<h2 id="tocS_ShowTurboPermissionResponseVO">ShowTurboPermissionResponseVO</h2>
+
+<a id="schemashowturbopermissionresponsevo"></a>
+<a id="schema_ShowTurboPermissionResponseVO"></a>
+<a id="tocSshowturbopermissionresponsevo"></a>
+<a id="tocsshowturbopermissionresponsevo"></a>
+
+```json
+{
+  "permissionDescription": "string",
+  "isGranted": true
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|permissionDescription|string|true|none||权限描述|
+|isGranted|boolean|true|none||是否授予|
+
+<h2 id="tocS_ServerRequestsResponseVO">ServerRequestsResponseVO</h2>
+
+<a id="schemaserverrequestsresponsevo"></a>
+<a id="schema_ServerRequestsResponseVO"></a>
+<a id="tocSserverrequestsresponsevo"></a>
+<a id="tocsserverrequestsresponsevo"></a>
+
+```json
+{
+  "requestsCount": 0,
+  "cachedRequestsCount": 0,
+  "exceptionRequestsCount": 0,
+  "exceptionRequestsCachedCount": 0,
+  "exceptionRequestsRate": 0.1,
+  "exceptionRequestsCachedRate": 0.1,
+  "exceptionRequestsUnCachedRate": 0.1,
+  "zlibSkippedRequestsCount": 0,
+  "zlibSkippedRequestsBefore": 0,
+  "zlibSkippedRequestsRateThanBefore": 0.1,
+  "retryRequestsCount": 0,
+  "retryRequestsBefore": 0,
+  "retryRequestsRateThanBefore": 0.1,
+  "panicRequestsCount": 0,
+  "panicRequestsBefore": 0,
+  "panicRequestsRateThanBefore": 0.1
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|requestsCount|integer(int32)|true|none||请求次数|
+|cachedRequestsCount|integer(int32)|true|none||缓存请求次数|
+|exceptionRequestsCount|integer(int32)|true|none||异常请求次数|
+|exceptionRequestsCachedCount|integer(int32)|true|none||异常请求缓存次数|
+|exceptionRequestsRate|number(double)|true|none||异常请求率|
+|exceptionRequestsCachedRate|number(double)|true|none||异常请求缓存率|
+|exceptionRequestsUnCachedRate|number(double)|true|none||异常请求未缓存率|
+|zlibSkippedRequestsCount|integer(int32)|true|none||zlib跳过次数|
+|zlibSkippedRequestsBefore|integer(int32)|true|none||zlib之前跳过次数|
+|zlibSkippedRequestsRateThanBefore|number(double)|true|none||zlib相比之前跳过次数|
+|retryRequestsCount|integer(int32)|true|none||重试请求次数|
+|retryRequestsBefore|integer(int32)|true|none||之前重试请求次数|
+|retryRequestsRateThanBefore|number(double)|true|none||相比之前重试请求次数|
+|panicRequestsCount|integer(int32)|true|none||panicRequestsCount|
+|panicRequestsBefore|integer(int32)|true|none||panicRequestsBefore|
+|panicRequestsRateThanBefore|number(double)|true|none||panicRequestsRateThanBefore|
+
+<h2 id="tocS_ShowRivalResponseVO">ShowRivalResponseVO</h2>
+
+<a id="schemashowrivalresponsevo"></a>
+<a id="schema_ShowRivalResponseVO"></a>
+<a id="tocSshowrivalresponsevo"></a>
+<a id="tocsshowrivalresponsevo"></a>
+
+```json
+{
+  "turboNameList": [
+    "string"
+  ],
+  "length": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|turboNameList|[string]|true|none||none|
+|length|integer(int32)|true|none||none|
+
+<h2 id="tocS_ShowQrCommandListResponseVO">ShowQrCommandListResponseVO</h2>
+
+<a id="schemashowqrcommandlistresponsevo"></a>
+<a id="schema_ShowQrCommandListResponseVO"></a>
+<a id="tocSshowqrcommandlistresponsevo"></a>
+<a id="tocsshowqrcommandlistresponsevo"></a>
+
+```json
+{
+  "functionType": "LOGIN",
+  "setting": "NONE"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|functionType|string|true|none||自定义类型|
+|setting|string|true|none||设置|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|functionType|LOGIN|
+|functionType|KASTANJ_LOGIN|
+|functionType|SPECIAL_TYPE_ONE_LOGIN|
+|functionType|SETTING|
+|functionType|PING|
+|setting|NONE|
+|setting|MASK_USERNAME|
+|setting|UDEMAE_SHOW_ACHIEVEMENT|
+|setting|DISABLE_TICKET|
+|setting|DISABLE_CUSTOM_NAME|
+|setting|DISABLE_CUSTOM_AVATAR|
+
+<h2 id="tocS_NetworkStatusResponseVO">NetworkStatusResponseVO</h2>
+
+<a id="schemanetworkstatusresponsevo"></a>
+<a id="schema_NetworkStatusResponseVO"></a>
+<a id="tocSnetworkstatusresponsevo"></a>
+<a id="tocsnetworkstatusresponsevo"></a>
+
+```json
+{
+  "arcadeName": "string",
+  "arcadeType": "TURBO",
+  "workingStatus": "WORKING",
+  "lastHeartbeatSecond": "string",
+  "heartbeatMap": [
+    "WORKING"
+  ]
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|arcadeName|string|true|none||机厅名称|
+|arcadeType|string|true|none||机厅类型|
+|workingStatus|string|true|none||当前状态|
+|lastHeartbeatSecond|string|true|none||最后心跳包|
+|heartbeatMap|[string]|true|none||心跳图|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|arcadeType|TURBO|
+|arcadeType|SPECIAL_TYPE_ONE|
+|workingStatus|WORKING|
+|workingStatus|WARNING|
+|workingStatus|ERROR|
+|workingStatus|UNKNOWN|
+
+<h2 id="tocS_PageDTOShowFriendsResponseVO">PageDTOShowFriendsResponseVO</h2>
+
+<a id="schemapagedtoshowfriendsresponsevo"></a>
+<a id="schema_PageDTOShowFriendsResponseVO"></a>
+<a id="tocSpagedtoshowfriendsresponsevo"></a>
+<a id="tocspagedtoshowfriendsresponsevo"></a>
+
+```json
+{
+  "content": [
+    {
+      "turboName": "string",
+      "avatar": "string",
+      "lastPlayHour": "string",
+      "lastPlayPlace": "string",
+      "permission": "ADMIN",
+      "warningTimes": 0,
+      "isBanned": true
+    }
+  ],
+  "totalElements": 0,
+  "totalPages": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|content|[[ShowFriendsResponseVO](#schemashowfriendsresponsevo)]|true|none||none|
+|totalElements|integer(int64)|true|none||none|
+|totalPages|integer(int32)|true|none||none|
+
+<h2 id="tocS_ShowFriendsResponseVO">ShowFriendsResponseVO</h2>
+
+<a id="schemashowfriendsresponsevo"></a>
+<a id="schema_ShowFriendsResponseVO"></a>
+<a id="tocSshowfriendsresponsevo"></a>
+<a id="tocsshowfriendsresponsevo"></a>
+
+```json
+{
+  "turboName": "string",
+  "avatar": "string",
+  "lastPlayHour": "string",
+  "lastPlayPlace": "string",
+  "permission": "ADMIN",
+  "warningTimes": 0,
+  "isBanned": true
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|turboName|string|true|none||turbo名称|
+|avatar|string|true|none||头像|
+|lastPlayHour|string|true|none||距离上次游玩小时|
+|lastPlayPlace|string|true|none||上次游玩地点|
+|permission|string|true|none||权限|
+|warningTimes|integer(int32)|true|none||警告时间|
+|isBanned|boolean|true|none||是否封禁|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|permission|ADMIN|
+|permission|BUILDER|
+|permission|AUTHORIZER|
+|permission|USER|
+
+<h2 id="tocS_ShowFriendRequestsResponseVO">ShowFriendRequestsResponseVO</h2>
+
+<a id="schemashowfriendrequestsresponsevo"></a>
+<a id="schema_ShowFriendRequestsResponseVO"></a>
+<a id="tocSshowfriendrequestsresponsevo"></a>
+<a id="tocsshowfriendrequestsresponsevo"></a>
+
+```json
+{
+  "turboName": "string",
+  "avatar": "string",
+  "permission": "ADMIN",
+  "warningTimes": 0,
+  "isBanned": true,
+  "requestTime": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|turboName|string|true|none||turbo名称|
+|avatar|string|true|none||头像|
+|permission|string|true|none||权限|
+|warningTimes|integer(int32)|true|none||警告时间|
+|isBanned|boolean|true|none||是否封禁|
+|requestTime|string|true|none||请求时间|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|permission|ADMIN|
+|permission|BUILDER|
+|permission|AUTHORIZER|
+|permission|USER|
+
+<h2 id="tocS_ArcadeList">ArcadeList</h2>
+
+<a id="schemaarcadelist"></a>
+<a id="schema_ArcadeList"></a>
+<a id="tocSarcadelist"></a>
+<a id="tocsarcadelist"></a>
+
+```json
+{
+  "arcadeName": "string",
+  "arcadeType": "TURBO",
+  "arcadeAlias": [
+    "string"
+  ]
+}
+
+```
+
+机厅列表
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|arcadeName|string|true|none||机厅名称|
+|arcadeType|string|true|none||机厅类型|
+|arcadeAlias|[string]|true|none||机厅别名|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|arcadeType|TURBO|
+|arcadeType|SPECIAL_TYPE_ONE|
+
+<h2 id="tocS_ShowArcadeAliasResponseVO">ShowArcadeAliasResponseVO</h2>
+
+<a id="schemashowarcadealiasresponsevo"></a>
+<a id="schema_ShowArcadeAliasResponseVO"></a>
+<a id="tocSshowarcadealiasresponsevo"></a>
+<a id="tocsshowarcadealiasresponsevo"></a>
+
+```json
+{
+  "permission": "ADMIN",
+  "arcadeList": [
+    {
+      "arcadeName": "string",
+      "arcadeType": "TURBO",
+      "arcadeAlias": [
+        "string"
+      ]
+    }
+  ]
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|permission|string|true|none||权限等级|
+|arcadeList|[[ArcadeList](#schemaarcadelist)]|true|none||机厅列表|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|permission|ADMIN|
+|permission|BUILDER|
+|permission|AUTHORIZER|
+|permission|USER|
+
+<h2 id="tocS_ServerRequestsEchartsResponseVO">ServerRequestsEchartsResponseVO</h2>
+
+<a id="schemaserverrequestsechartsresponsevo"></a>
+<a id="schema_ServerRequestsEchartsResponseVO"></a>
+<a id="tocSserverrequestsechartsresponsevo"></a>
+<a id="tocsserverrequestsechartsresponsevo"></a>
+
+```json
+{
+  "cachedLatency": [
+    [
+      0
+    ]
+  ],
+  "unCachedLatency": [
+    [
+      0
+    ]
+  ],
+  "startTimeStamp": 0,
+  "endTimeStamp": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|cachedLatency|[array]|true|none||已缓存|
+|unCachedLatency|[array]|true|none||未缓存|
+|startTimeStamp|integer(int64)|true|none||开始时间|
+|endTimeStamp|integer(int64)|true|none||结束时间|
+
+<h2 id="tocS_ComboInfo">ComboInfo</h2>
+
+<a id="schemacomboinfo"></a>
+<a id="schema_ComboInfo"></a>
+<a id="tocScomboinfo"></a>
+<a id="tocscomboinfo"></a>
+
+```json
+{
+  "type": 0,
+  "combo": 0,
+  "maxCombo": 0
+}
+
+```
+
+连击信息
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|type|integer(int32)|true|none||类型|
+|combo|integer(int32)|true|none||连击数量|
+|maxCombo|integer(int32)|true|none||最大连击|
+
+<h2 id="tocS_PageDTORecordsResponseVO">PageDTORecordsResponseVO</h2>
+
+<a id="schemapagedtorecordsresponsevo"></a>
+<a id="schema_PageDTORecordsResponseVO"></a>
+<a id="tocSpagedtorecordsresponsevo"></a>
+<a id="tocspagedtorecordsresponsevo"></a>
+
+```json
+{
+  "content": [
+    {
+      "musicId": 0,
+      "musicName": "string",
+      "musicAuthor": "string",
+      "musicDiff": 0,
+      "musicLevel": 0.1,
+      "isDxMusic": true,
+      "achievement": 0.1,
+      "isNewRecord": true,
+      "addRating": 0,
+      "comboInfo": {
+        "type": 0,
+        "combo": 0,
+        "maxCombo": 0
+      },
+      "syncInfo": {
+        "type": 0,
+        "sync": 0,
+        "maxSync": 0
+      },
+      "score": {
+        "critical": 0,
+        "perfect": 0,
+        "great": 0,
+        "good": 0,
+        "miss": 0
+      }
+    }
+  ],
+  "totalElements": 0,
+  "totalPages": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|content|[[RecordsResponseVO](#schemarecordsresponsevo)]|true|none||none|
+|totalElements|integer(int64)|true|none||none|
+|totalPages|integer(int32)|true|none||none|
+
+<h2 id="tocS_RecordsResponseVO">RecordsResponseVO</h2>
+
+<a id="schemarecordsresponsevo"></a>
+<a id="schema_RecordsResponseVO"></a>
+<a id="tocSrecordsresponsevo"></a>
+<a id="tocsrecordsresponsevo"></a>
+
+```json
+{
+  "musicId": 0,
+  "musicName": "string",
+  "musicAuthor": "string",
+  "musicDiff": 0,
+  "musicLevel": 0.1,
+  "isDxMusic": true,
+  "achievement": 0.1,
+  "isNewRecord": true,
+  "addRating": 0,
+  "comboInfo": {
+    "type": 0,
+    "combo": 0,
+    "maxCombo": 0
+  },
+  "syncInfo": {
+    "type": 0,
+    "sync": 0,
+    "maxSync": 0
+  },
+  "score": {
+    "critical": 0,
+    "perfect": 0,
+    "great": 0,
+    "good": 0,
+    "miss": 0
+  }
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|musicId|integer(int32)|true|none||乐曲id|
+|musicName|string|true|none||乐曲名称|
+|musicAuthor|string|true|none||乐曲作者|
+|musicDiff|integer(int32)|true|none||乐曲难度|
+|musicLevel|number(double)|true|none||乐曲等级|
+|isDxMusic|boolean|true|none||是否DX谱面|
+|achievement|number(double)|true|none||达成分数|
+|isNewRecord|boolean|true|none||是否新纪录|
+|addRating|integer(int32)|true|none||新增rating|
+|comboInfo|[ComboInfo](#schemacomboinfo)|true|none||连击信息|
+|syncInfo|[SyncInfo](#schemasyncinfo)|true|none||同步信息|
+|score|[Score](#schemascore)|true|none||分数|
+
+<h2 id="tocS_Score">Score</h2>
+
+<a id="schemascore"></a>
+<a id="schema_Score"></a>
+<a id="tocSscore"></a>
+<a id="tocsscore"></a>
+
+```json
+{
+  "critical": 0,
+  "perfect": 0,
+  "great": 0,
+  "good": 0,
+  "miss": 0
+}
+
+```
+
+分数
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|critical|integer(int32)|true|none||critical|
+|perfect|integer(int32)|true|none||perfect|
+|great|integer(int32)|true|none||great|
+|good|integer(int32)|true|none||good|
+|miss|integer(int32)|true|none||miss|
+
+<h2 id="tocS_SyncInfo">SyncInfo</h2>
+
+<a id="schemasyncinfo"></a>
+<a id="schema_SyncInfo"></a>
+<a id="tocSsyncinfo"></a>
+<a id="tocssyncinfo"></a>
+
+```json
+{
+  "type": 0,
+  "sync": 0,
+  "maxSync": 0
+}
+
+```
+
+同步信息
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|type|integer(int32)|true|none||类型|
+|sync|integer(int32)|true|none||同步分数|
+|maxSync|integer(int32)|true|none||最大同步分数|
+
+<h2 id="tocS_MusicRankingResponseVO">MusicRankingResponseVO</h2>
+
+<a id="schemamusicrankingresponsevo"></a>
+<a id="schema_MusicRankingResponseVO"></a>
+<a id="tocSmusicrankingresponsevo"></a>
+<a id="tocsmusicrankingresponsevo"></a>
+
+```json
+{
+  "ranking": 0,
+  "maimaiName": "string",
+  "turboName": "string",
+  "achievement": 0.1,
+  "deluxScore": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|ranking|integer(int32)|true|none||排名|
+|maimaiName|string|true|none||maimai名称|
+|turboName|string|true|none||turbo名称|
+|achievement|number(double)|true|none||达成分数|
+|deluxScore|integer(int32)|true|none||DX分数|
+
+<h2 id="tocS_PageDTOMusicRankingResponseVO">PageDTOMusicRankingResponseVO</h2>
+
+<a id="schemapagedtomusicrankingresponsevo"></a>
+<a id="schema_PageDTOMusicRankingResponseVO"></a>
+<a id="tocSpagedtomusicrankingresponsevo"></a>
+<a id="tocspagedtomusicrankingresponsevo"></a>
+
+```json
+{
+  "content": [
+    {
+      "ranking": 0,
+      "maimaiName": "string",
+      "turboName": "string",
+      "achievement": 0.1,
+      "deluxScore": 0
+    }
+  ],
+  "totalElements": 0,
+  "totalPages": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|content|[[MusicRankingResponseVO](#schemamusicrankingresponsevo)]|true|none||none|
+|totalElements|integer(int64)|true|none||none|
+|totalPages|integer(int32)|true|none||none|
+
+<h2 id="tocS_HistoryPhotosResponseVO">HistoryPhotosResponseVO</h2>
+
+<a id="schemahistoryphotosresponsevo"></a>
+<a id="schema_HistoryPhotosResponseVO"></a>
+<a id="tocShistoryphotosresponsevo"></a>
+<a id="tocshistoryphotosresponsevo"></a>
+
+```json
+{
+  "photoId": "string",
+  "isFavorite": true
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|photoId|string|true|none||相片id|
+|isFavorite|boolean|true|none||是否为喜爱|
+
+<h2 id="tocS_PageDTOHistoryPhotosResponseVO">PageDTOHistoryPhotosResponseVO</h2>
+
+<a id="schemapagedtohistoryphotosresponsevo"></a>
+<a id="schema_PageDTOHistoryPhotosResponseVO"></a>
+<a id="tocSpagedtohistoryphotosresponsevo"></a>
+<a id="tocspagedtohistoryphotosresponsevo"></a>
+
+```json
+{
+  "content": [
+    {
+      "photoId": "string",
+      "isFavorite": true
+    }
+  ],
+  "totalElements": 0,
+  "totalPages": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|content|[[HistoryPhotosResponseVO](#schemahistoryphotosresponsevo)]|true|none||none|
+|totalElements|integer(int64)|true|none||none|
+|totalPages|integer(int32)|true|none||none|
+
+<h2 id="tocS_GetQrCommandResponseVO">GetQrCommandResponseVO</h2>
+
+<a id="schemagetqrcommandresponsevo"></a>
+<a id="schema_GetQrCommandResponseVO"></a>
+<a id="tocSgetqrcommandresponsevo"></a>
+<a id="tocsgetqrcommandresponsevo"></a>
+
+```json
+{
+  "qrData": "string",
+  "valid": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|qrData|string|true|none||二维码数据|
+|valid|string|true|none||有效期|
+
+<h2 id="tocS_PageDTOString">PageDTOString</h2>
+
+<a id="schemapagedtostring"></a>
+<a id="schema_PageDTOString"></a>
+<a id="tocSpagedtostring"></a>
+<a id="tocspagedtostring"></a>
+
+```json
+{
+  "content": [
+    "string"
+  ],
+  "totalElements": 0,
+  "totalPages": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|content|[string]|true|none||none|
+|totalElements|integer(int64)|true|none||none|
+|totalPages|integer(int32)|true|none||none|
+
+<h2 id="tocS_ExecuteRecordResponseVO">ExecuteRecordResponseVO</h2>
+
+<a id="schemaexecuterecordresponsevo"></a>
+<a id="schema_ExecuteRecordResponseVO"></a>
+<a id="tocSexecuterecordresponsevo"></a>
+<a id="tocsexecuterecordresponsevo"></a>
+
+```json
+{
+  "recordId": "string",
+  "turboName": "string",
+  "type": "string",
+  "reason": "string"
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|recordId|string|true|none||记录id|
+|turboName|string|true|none||turbo名称|
+|type|string|true|none||类型|
+|reason|string|true|none||理由|
+
+<h2 id="tocS_DxRatingRankingResponseVO">DxRatingRankingResponseVO</h2>
+
+<a id="schemadxratingrankingresponsevo"></a>
+<a id="schema_DxRatingRankingResponseVO"></a>
+<a id="tocSdxratingrankingresponsevo"></a>
+<a id="tocsdxratingrankingresponsevo"></a>
+
+```json
+{
+  "ranking": 0,
+  "maimaiName": "string",
+  "turboName": "string",
+  "rating": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|ranking|integer(int32)|true|none||ranking|
+|maimaiName|string|true|none||maimai名称|
+|turboName|string|true|none||turbo名称|
+|rating|integer(int32)|true|none||rating|
+
+<h2 id="tocS_PageDTODxRatingRankingResponseVO">PageDTODxRatingRankingResponseVO</h2>
+
+<a id="schemapagedtodxratingrankingresponsevo"></a>
+<a id="schema_PageDTODxRatingRankingResponseVO"></a>
+<a id="tocSpagedtodxratingrankingresponsevo"></a>
+<a id="tocspagedtodxratingrankingresponsevo"></a>
+
+```json
+{
+  "content": [
+    {
+      "ranking": 0,
+      "maimaiName": "string",
+      "turboName": "string",
+      "rating": 0
+    }
+  ],
+  "totalElements": 0,
+  "totalPages": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|content|[[DxRatingRankingResponseVO](#schemadxratingrankingresponsevo)]|true|none||none|
+|totalElements|integer(int64)|true|none||none|
+|totalPages|integer(int32)|true|none||none|
+
+<h2 id="tocS_CurrentTicketsResponseVO">CurrentTicketsResponseVO</h2>
+
+<a id="schemacurrentticketsresponsevo"></a>
+<a id="schema_CurrentTicketsResponseVO"></a>
+<a id="tocScurrentticketsresponsevo"></a>
+<a id="tocscurrentticketsresponsevo"></a>
+
+```json
+{
+  "turboTicket": {
+    "isEnable": true,
+    "ticketId": 0
+  },
+  "maimaiTickets": [
+    {
+      "ticketId": 0,
+      "stock": 0
+    }
+  ]
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|turboTicket|[TurboTicket](#schematurboticket)|true|none||turbo跑图券|
+|maimaiTickets|[[MaimaiTickets](#schemamaimaitickets)]|true|none||maimai跑图券|
+
+<h2 id="tocS_MaimaiTickets">MaimaiTickets</h2>
+
+<a id="schemamaimaitickets"></a>
+<a id="schema_MaimaiTickets"></a>
+<a id="tocSmaimaitickets"></a>
+<a id="tocsmaimaitickets"></a>
+
+```json
+{
+  "ticketId": 0,
+  "stock": 0
+}
+
+```
+
+maimai跑图券
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|ticketId|integer(int32)|true|none||券id|
+|stock|integer(int32)|true|none||数量|
+
+<h2 id="tocS_TurboTicket">TurboTicket</h2>
+
+<a id="schematurboticket"></a>
+<a id="schema_TurboTicket"></a>
+<a id="tocSturboticket"></a>
+<a id="tocsturboticket"></a>
+
+```json
+{
+  "isEnable": true,
+  "ticketId": 0
+}
+
+```
+
+turbo跑图券
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|isEnable|boolean|true|none||是否启用|
+|ticketId|integer(int32)|true|none||券id|
+
+<h2 id="tocS_ArcadeInfoResponseVO">ArcadeInfoResponseVO</h2>
+
+<a id="schemaarcadeinforesponsevo"></a>
+<a id="schema_ArcadeInfoResponseVO"></a>
+<a id="tocSarcadeinforesponsevo"></a>
+<a id="tocsarcadeinforesponsevo"></a>
+
+```json
+{
+  "arcadeName": "string",
+  "arcadeType": "TURBO",
+  "arcadePlayCount": 0,
+  "arcadeRequested": 0,
+  "arcadeCachedRequest": 0,
+  "arcadeFixedRequest": 0,
+  "arcadeCachedHitRate": 0.1,
+  "singleArcadeInfo": [
+    {
+      "singleName": "string",
+      "isEnableCustomName": true,
+      "isEnableCustomAvatar": true,
+      "isEnableTurboTicket": true,
+      "arcadeEnableSetting": [
+        "string"
+      ]
+    }
+  ]
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|arcadeName|string|true|none||机厅名称|
+|arcadeType|string|true|none||机厅类型|
+|arcadePlayCount|integer(int32)|true|none||机厅pc数|
+|arcadeRequested|integer(int32)|true|none||机厅请求|
+|arcadeCachedRequest|integer(int32)|true|none||机厅缓存|
+|arcadeFixedRequest|integer(int32)|true|none||机厅修复|
+|arcadeCachedHitRate|number(double)|true|none||hitRate|
+|singleArcadeInfo|[[SingleArcadeInfo](#schemasinglearcadeinfo)]|true|none||单独机厅设置信息|
+
+#### 枚举值
+
+|属性|值|
+|---|---|
+|arcadeType|TURBO|
+|arcadeType|SPECIAL_TYPE_ONE|
+
+<h2 id="tocS_SingleArcadeInfo">SingleArcadeInfo</h2>
+
+<a id="schemasinglearcadeinfo"></a>
+<a id="schema_SingleArcadeInfo"></a>
+<a id="tocSsinglearcadeinfo"></a>
+<a id="tocssinglearcadeinfo"></a>
+
+```json
+{
+  "singleName": "string",
+  "isEnableCustomName": true,
+  "isEnableCustomAvatar": true,
+  "isEnableTurboTicket": true,
+  "arcadeEnableSetting": [
+    "string"
+  ]
+}
+
+```
+
+单独机厅设置信息
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|singleName|string|true|none||单独机厅设置信息|
+|isEnableCustomName|boolean|true|none||是否启用自定义名称|
+|isEnableCustomAvatar|boolean|true|none||是否启用自定义头像|
+|isEnableTurboTicket|boolean|true|none||是否使用跑图券|
+|arcadeEnableSetting|[string]|true|none||是否启用自定义设置|
+
+<h2 id="tocS_ArcadeInfoDetailResponseVO">ArcadeInfoDetailResponseVO</h2>
+
+<a id="schemaarcadeinfodetailresponsevo"></a>
+<a id="schema_ArcadeInfoDetailResponseVO"></a>
+<a id="tocSarcadeinfodetailresponsevo"></a>
+<a id="tocsarcadeinfodetailresponsevo"></a>
+
+```json
+{
+  "arcadeInfo": {
+    "arcadeName": "string",
+    "arcadeType": "TURBO",
+    "arcadePlayCount": 0,
+    "arcadeRequested": 0,
+    "arcadeCachedRequest": 0,
+    "arcadeFixedRequest": 0,
+    "arcadeCachedHitRate": 0.1,
+    "singleArcadeInfo": [
+      {
+        "singleName": "string",
+        "isEnableCustomName": true,
+        "isEnableCustomAvatar": true,
+        "isEnableTurboTicket": true,
+        "arcadeEnableSetting": [
+          "string"
+        ]
+      }
+    ]
+  },
+  "thirtyMinutesPlayer": 0,
+  "oneHourPlayer": 0,
+  "twoHoursPlayer": 0,
+  "thirtyMinutesPlayCount": 0,
+  "oneHourPlayCount": 0,
+  "twoHoursPlayCount": 0,
+  "playerList": [
+    {
+      "userIdHash": "string",
+      "maimaiName": "string",
+      "turboName": "string",
+      "isTurboAdmin": true,
+      "playdate": "string"
+    }
+  ],
+  "thirtyMinutesPlayerList": [
+    {
+      "userIdHash": "string",
+      "maimaiName": "string",
+      "turboName": "string",
+      "isTurboAdmin": true,
+      "playdate": "string"
+    }
+  ]
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|arcadeInfo|[ArcadeInfoResponseVO](#schemaarcadeinforesponsevo)|true|none||none|
+|thirtyMinutesPlayer|integer(int32)|true|none||三十分钟内玩家|
+|oneHourPlayer|integer(int32)|true|none||一小时内玩家|
+|twoHoursPlayer|integer(int32)|true|none||两小时内玩家|
+|thirtyMinutesPlayCount|integer(int32)|true|none||三十分钟玩家统计|
+|oneHourPlayCount|integer(int32)|true|none||一小时玩家统计|
+|twoHoursPlayCount|integer(int32)|true|none||两小时玩家统计|
+|playerList|[[PlayerList](#schemaplayerlist)]|true|none||玩家列表|
+|thirtyMinutesPlayerList|[[PlayerList](#schemaplayerlist)]|true|none||三十分钟玩家列表|
+
+<h2 id="tocS_PlayerList">PlayerList</h2>
+
+<a id="schemaplayerlist"></a>
+<a id="schema_PlayerList"></a>
+<a id="tocSplayerlist"></a>
+<a id="tocsplayerlist"></a>
+
+```json
+{
+  "userIdHash": "string",
+  "maimaiName": "string",
+  "turboName": "string",
+  "isTurboAdmin": true,
+  "playdate": "string"
+}
+
+```
+
+三十分钟玩家列表
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|userIdHash|string|true|none||玩家ID哈希|
+|maimaiName|string|true|none||maimai名称|
+|turboName|string|true|none||turbo名称|
+|isTurboAdmin|boolean|true|none||是否为盒子管理|
+|playdate|string|true|none||游玩时间|
+
+<h2 id="tocS_AchievementRankingResponseVO">AchievementRankingResponseVO</h2>
+
+<a id="schemaachievementrankingresponsevo"></a>
+<a id="schema_AchievementRankingResponseVO"></a>
+<a id="tocSachievementrankingresponsevo"></a>
+<a id="tocsachievementrankingresponsevo"></a>
+
+```json
+{
+  "ranking": 0,
+  "maimaiName": "string",
+  "turboName": "string",
+  "achievement": 0.1
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|ranking|integer(int32)|true|none||排名|
+|maimaiName|string|true|none||maimai名称|
+|turboName|string|true|none||turbo名称|
+|achievement|number(double)|true|none||达成分数|
+
+<h2 id="tocS_PageDTOAchievementRankingResponseVO">PageDTOAchievementRankingResponseVO</h2>
+
+<a id="schemapagedtoachievementrankingresponsevo"></a>
+<a id="schema_PageDTOAchievementRankingResponseVO"></a>
+<a id="tocSpagedtoachievementrankingresponsevo"></a>
+<a id="tocspagedtoachievementrankingresponsevo"></a>
+
+```json
+{
+  "content": [
+    {
+      "ranking": 0,
+      "maimaiName": "string",
+      "turboName": "string",
+      "achievement": 0.1
+    }
+  ],
+  "totalElements": 0,
+  "totalPages": 0
+}
+
+```
+
+### 属性
+
+|名称|类型|必选|约束|中文名|说明|
+|---|---|---|---|---|---|
+|content|[[AchievementRankingResponseVO](#schemaachievementrankingresponsevo)]|true|none||none|
+|totalElements|integer(int64)|true|none||none|
+|totalPages|integer(int32)|true|none||none|
 
